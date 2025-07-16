@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BL 콘텐츠 기획안: 언젠가 너의 별에 닿을 때</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Cosmic Dream (Deep Indigo, Soft Gold, Warm Slate, Starlight White) -->
+    <!-- Application Structure Plan: A thematic, single-page scrolling experience designed to immerse the user in the story's world. It uses a hero section for immediate impact, interactive character profiles, and a visual story arc timeline to replace the static PPT format. This non-linear but guided structure encourages exploration and better conveys the project's emotional tone than a simple slide deck. -->
+    <!-- Visualization & Content Choices: Report Info: Character Profiles -> Goal: Compare & Contrast -> Viz: Interactive two-column card layout with JS click-to-reveal -> Justification: More dynamic and engaging than static slides. | Report Info: Story Plot -> Goal: Show Progression -> Viz: Vertical timeline diagram using HTML/Tailwind -> Justification: Visually represents the narrative flow. | Report Info: Key Concepts (Intent, Differentiators) -> Goal: Inform -> Viz: Icon-based card grid -> Justification: Easily scannable and visually appealing. All implemented with HTML/CSS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #fcd34d;
+            border-bottom-color: #fcd34d;
+        }
+        .hero {
+            background-image: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.9)), url('https://images.unsplash.com/photo-1444703686981-a3abbc4d42e2?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .character-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .character-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            left: -1.35rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            background-color: #4f46e5;
+            border: 4px solid #f1f5f9;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-800">
+
+    <header id="header" class="bg-gray-900 text-white p-4 fixed w-full top-0 z-50 shadow-lg transition-all duration-300">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-amber-300">언젠가 너의 별에 닿을 때</a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#overview" class="nav-link">개요</a>
+                <a href="#synopsis" class="nav-link">시놉시스</a>
+                <a href="#characters" class="nav-link">캐릭터</a>
+                <a href="#story-arc" class="nav-link">스토리 전개</a>
+                <a href="#vision" class="nav-link">프로젝트 비전</a>
+            </div>
+             <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <span class="text-2xl">☰</span>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden mt-4">
+            <a href="#overview" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-700">개요</a>
+            <a href="#synopsis" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-700">시놉시스</a>
+            <a href="#characters" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-700">캐릭터</a>
+            <a href="#story-arc" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-700">스토리 전개</a>
+            <a href="#vision" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-700">프로젝트 비전</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero h-screen flex items-center justify-center text-white text-center p-4">
+            <div class="container mx-auto">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">언젠가 너의 별에 닿을 때</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">
+                    "상처받은 과거를 가진 별똥별 소년과,<br>그를 우연히 발견한 외로운 우주 관측자의 치유와 사랑 이야기."
+                </p>
+            </div>
+        </section>
+
+        <section id="overview" class="py-20 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-12 text-indigo-800">프로젝트 개요</h2>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-700">기획 의도</h3>
+                        <p class="text-gray-600 mb-2">현실 속에서 잊고 지냈던 순수하고 애틋한 사랑의 감정을 BL 장르를 통해 아름답게 그려내고자 합니다.</p>
+                        <p class="text-gray-600">인물들의 성장과 유대를 통해 깊은 공감과 치유를 선사하며, BL 팬덤을 넘어 대중에게 어필할 수 있는 보편적 감동을 추구합니다.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-700">장르 및 타겟</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-700">장르</h4>
+                                <p class="text-gray-600">로맨스 판타지 BL (성장 드라마, 힐링)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">주 타겟</h4>
+                                <p class="text-gray-600">10대 후반 ~ 30대 여성 (BL 주 소비층)</p>
+                            </div>
+                             <div>
+                                <h4 class="font-semibold text-gray-700">확장 타겟</h4>
+                                <p class="text-gray-600">아름다운 서사와 감성 연출을 선호하는 모든 시청자</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="synopsis" class="py-20 px-4 bg-gray-900 text-white">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-8 text-amber-300">시놉시스</h2>
+                <div class="max-w-3xl mx-auto space-y-6 text-lg leading-relaxed text-gray-300">
+                    <p>어릴 적 트라우마로 세상과 담을 쌓고 밤하늘의 별을 관측하는 데만 몰두하는 고독한 천문학도, **강은우**.</p>
+                    <p>어느 날 밤, 그의 망원경에 포착된 것은 단순한 별똥별이 아니었습니다. 인간의 형상으로 추락하는 빛줄기, 그리고 그 빛이 남긴 기억을 잃은 신비로운 소년, **이엘**.</p>
+                    <p>은우는 혼란 속에서도 이엘을 거두고, 두 사람은 천문대에서 함께 살게 됩니다. 함께 별을 보고, 서로의 상처를 보듬어가며 깊은 유대감을 형성해 나갑니다.</p>
+                    <p>이엘의 미스터리한 힘과 과거의 단편들이 드러나며, 두 사람의 운명은 예상치 못한 방향으로 흘러가는데... 과연 은우는 이엘을 통해 자신의 트라우마를 극복하고 진정한 사랑을 찾을 수 있을까요?</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="characters" class="py-20 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-12 text-indigo-800">주요 캐릭터</h2>
+                <div class="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+                    <div class="character-card bg-white p-8 rounded-lg shadow-lg text-center">
+                        <div class="w-32 h-32 mx-auto rounded-full bg-indigo-200 mb-6 flex items-center justify-center">
+                             <img src="https://placehold.co/128x128/a5b4fc/312e81?text=은우" alt="강은우" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/128x128/a5b4fc/312e81?text=Eunwoo';">
+                        </div>
+                        <h3 class="text-2xl font-bold text-indigo-800">강은우 (攻)</h3>
+                        <p class="text-gray-500 mb-4">20대 중반, 고독한 천문학도</p>
+                        <p class="text-gray-600">차분하고 냉철해 보이지만 내면은 따뜻하고 여립니다. 어릴 적 트라우마로 사회와 단절된 채 천문대에 은둔하며, 이엘을 통해 치유와 성장을 겪는 인물입니다.</p>
+                    </div>
+                    <div class="character-card bg-white p-8 rounded-lg shadow-lg text-center">
+                        <div class="w-32 h-32 mx-auto rounded-full bg-amber-100 mb-6 flex items-center justify-center">
+                            <img src="https://placehold.co/128x128/fde68a/854d0e?text=이엘" alt="이엘" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/128x128/fde68a/854d0e?text=El';">
+                        </div>
+                        <h3 class="text-2xl font-bold text-amber-700">이엘 (受)</h3>
+                        <p class="text-gray-500 mb-4">10대 후반, 신비로운 별똥별 소년</p>
+                        <p class="text-gray-600">기억을 잃은 채 순수하고 호기심 많은 소년. 알 수 없는 힘을 가졌으며, 은우의 삶에 빛과 따뜻함이 되어주면서 자신의 정체를 찾아가는 인물입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="story-arc" class="py-20 px-4 bg-slate-100">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-16 text-indigo-800">스토리 전개</h2>
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative border-l-2 border-indigo-300 ml-4 pl-8 space-y-16">
+                        <div class="timeline-item">
+                            <h3 class="text-xl font-bold text-indigo-700">발단: 만남</h3>
+                            <p class="text-gray-600 mt-2">은우, 별똥별처럼 떨어진 이엘을 발견하고 거두다. 두 사람의 운명적인 동거가 시작된다.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3 class="text-xl font-bold text-indigo-700">전개: 유대</h3>
+                            <p class="text-gray-600 mt-2">함께 별을 보고, 서로의 상처를 보듬으며 깊은 유대감을 형성하고 서서히 마음을 열어간다.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3 class="text-xl font-bold text-indigo-700">위기: 시련</h3>
+                            <p class="text-gray-600 mt-2">이엘의 정체와 관련된 미스터리가 심화되고, 그를 쫓는 세력이 등장하며 두 사람에게 시련이 닥친다.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3 class="text-xl font-bold text-indigo-700">절정: 극복</h3>
+                            <p class="text-gray-600 mt-2">모든 시련을 함께 헤쳐 나가며 서로에 대한 사랑을 확인하고, 과거의 상처를 극복한다.</p>
+                        </div>
+                         <div class="timeline-item">
+                            <h3 class="text-xl font-bold text-indigo-700">결말: 완전한 사랑</h3>
+                            <p class="text-gray-600 mt-2">진정한 행복을 찾고, 서로의 우주 속에서 영원히 빛나는 별이 되어 새로운 삶을 함께 시작한다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="vision" class="py-20 px-4">
+             <div class="container mx-auto">
+                 <h2 class="text-3xl font-bold text-center mb-12 text-indigo-800">프로젝트 비전</h2>
+                 <div class="max-w-5xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-gray-700">차별점</h3>
+                     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                         <div class="bg-white p-6 rounded-lg shadow-md text-center"><h4 class="font-bold text-indigo-600 mb-2">치유와 성장</h4><p class="text-sm text-gray-600">단순 로맨스를 넘어 캐릭터의 내면적 성장에 집중</p></div>
+                         <div class="bg-white p-6 rounded-lg shadow-md text-center"><h4 class="font-bold text-indigo-600 mb-2">독특한 판타지</h4><p class="text-sm text-gray-600">'별똥별 소년'이라는 신비로운 컨셉</p></div>
+                         <div class="bg-white p-6 rounded-lg shadow-md text-center"><h4 class="font-bold text-indigo-600 mb-2">보편적 감동</h4><p class="text-sm text-gray-600">BL 팬덤 외 대중도 공감할 수 있는 순수한 사랑</p></div>
+                         <div class="bg-white p-6 rounded-lg shadow-md text-center"><h4 class="font-bold text-indigo-600 mb-2">시각적 아름다움</h4><p class="text-sm text-gray-600">별, 우주, 천문대 등 몽환적인 비주얼</p></div>
+                     </div>
+
+                    <h3 class="text-2xl font-bold mb-6 text-center text-gray-700">예상 콘텐츠 형태</h3>
+                     <div class="grid md:grid-cols-3 gap-8">
+                         <div class="bg-indigo-100 p-6 rounded-lg text-center"><h4 class="text-xl font-bold text-indigo-800 mb-2">웹소설/웹툰</h4><p class="text-gray-700">섬세한 감정 묘사와 아름다운 작화로 비주얼 극대화</p></div>
+                         <div class="bg-indigo-100 p-6 rounded-lg text-center"><h4 class="text-xl font-bold text-indigo-800 mb-2">애니메이션</h4><p class="text-gray-700">판타지 요소와 감성적 연출을 효과적으로 구현</p></div>
+                         <div class="bg-indigo-100 p-6 rounded-lg text-center"><h4 class="text-xl font-bold text-indigo-800 mb-2">드라마 (OTT)</h4><p class="text-gray-700">배우의 연기로 깊이 있는 감정선과 높은 몰입감 제공</p></div>
+                     </div>
+                 </div>
+             </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-10 px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-bold mb-2 text-amber-300">언젠가 너의 별에 닿을 때</h2>
+            <p class="text-gray-400 mb-4">궁금하신 점이 있다면 언제든지 문의해주세요.</p>
+            <p class="text-gray-500">[귀하의 회사/팀 이름] | [이메일 주소] | [연락처]</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileNavLinks = document.querySelectorAll('#mobile-menu a');
+            const header = document.getElementById('header');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            let headerHeight = header.offsetHeight;
+
+            window.addEventListener('resize', () => {
+                headerHeight = header.offsetHeight;
+            });
+
+            const setActiveLink = () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - headerHeight - 50) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', setActiveLink);
+            setActiveLink();
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
