@@ -3,25 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인터랙티브 기획안: 달콤한 재회</title>
+    <title>인터랙티브 기획안: 달콤한 재회 (학원물 Ver.)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght @300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals & Rose -->
     <!-- Application Structure Plan: 기획안의 정보를 효과적으로 전달하기 위해 '캐릭터 중심의 인터랙티브 대시보드' 구조를 설계했습니다. 사용자는 상단 네비게이션을 통해 원하는 정보(개요, 등장인물, 관계도, 핵심 포인트)로 즉시 이동할 수 있습니다. 특히 '등장인물' 섹션에서는 탭 인터페이스를 통해 각 인물의 상세 정보를 깊이 있게 탐색할 수 있으며, '관계도' 섹션에서는 차트와 타임라인을 통해 두 주인공의 복잡한 서사를 시각적으로 쉽게 이해할 수 있도록 구성했습니다. 이 구조는 사용자가 수동적으로 텍스트를 읽는 대신, 능동적으로 정보를 발견하고 스토리에 몰입하도록 유도하기 위해 선택되었습니다. -->
-    <!-- Visualization & Content Choices: 1. 인물 비교 (Goal: Compare): '관계도' 섹션에서 두 주인공의 상반된 성격 키워드를 Chart.js의 '레이더 차트'로 시각화했습니다. 이는 '까칠공'과 '햇살수'라는 핵심적인 캐릭터 대비를 직관적으로 보여주어 관계성의 매력을 극대화합니다. 2. 관계 변화 (Goal: Change): 두 인물의 10년에 걸친 서사를 HTML/CSS/JS로 구현한 '인터랙티브 타임라인'으로 표현했습니다. 각 시점을 클릭하면 관련 시놉시스 내용이 나타나, 사용자가 시간의 흐름에 따른 감정 변화를 쉽게 따라갈 수 있도록 돕습니다. 3. 핵심 강점 (Goal: Inform): 작품의 강점 세 가지를 아이콘이 포함된 정보 카드로 디자인하여 가독성을 높이고 핵심 메시지를 명확하게 전달합니다. 모든 시각 자료는 사용자의 이해를 돕고 상호작용을 유도하기 위해 선택되었습니다. -->
+    <!-- Visualization & Content Choices: 1. 인물 비교 (Goal: Compare): '관계도' 섹션에서 두 주인공의 상반된 성격 키워드를 Chart.js의 '레이더 차트'로 시각화했습니다. 이는 '까칠 모범생'과 '햇살 인싸'라는 핵심적인 캐릭터 대비를 직관적으로 보여주어 관계성의 매력을 극대화합니다. 2. 관계 변화 (Goal: Change): 두 인물의 학창 시절 관계 변화를 HTML/CSS/JS로 구현한 '인터랙티브 타임라인'으로 표현했습니다. 각 시점을 클릭하면 관련 시놉시스 내용이 나타나, 사용자가 시간의 흐름에 따른 감정 변화를 쉽게 따라갈 수 있도록 돕습니다. 3. 핵심 강점 (Goal: Inform): 작품의 강점 세 가지를 아이콘이 포함된 정보 카드로 디자인하여 가독성을 높이고 핵심 메시지를 명확하게 전달합니다. 모든 시각 자료는 사용자의 이해를 돕고 상호작용을 유도하기 위해 선택되었습니다. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
-            font-family: 'Noto Sans KR', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .font-gaegu {
+            font-family: 'Gaegu', cursive;
         }
         .nav-link {
             transition: color 0.3s, border-bottom-color 0.3s;
         }
         .nav-link:hover {
-            color: #832729;
+            color: #832729;   
             border-bottom-color: #832729;
         }
         .active-link {
@@ -63,53 +66,75 @@
                 height: 400px;
             }
         }
+        .notebook-bg {
+             background-color: #FDFBF8;
+             background-image: linear-gradient(to bottom, transparent 95%, #EAD9C9 95%);
+             background-size: 100% 2rem;
+        }
     </style>
 </head>
 <body class="bg-[#FDFBF8] text-stone-800">
 
     <header id="header" class="bg-[#FDFBF8]/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#hero" class="text-xl font-bold text-[#832729]">달콤한 재회</a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#overview" class="nav-link border-b-2 border-transparent pb-1">개요</a>
-                <a href="#characters" class="nav-link border-b-2 border-transparent pb-1">등장인물</a>
-                <a href="#relationship" class="nav-link border-b-2 border-transparent pb-1">관계도</a>
-                <a href="#points" class="nav-link border-b-2 border-transparent pb-1">핵심 포인트</a>
+            <a href="#hero" class="text-2xl font-bold text-[#832729] font-gaegu">달콤한 재회</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#overview" class="nav-link border-b-2 border-transparent pb-1 font-gaegu text-lg">개요</a>
+                <a href="#characters" class="nav-link border-b-2 border-transparent pb-1 font-gaegu text-lg">등장인물</a>
+                <a href="#relationship" class="nav-link border-b-2 border-transparent pb-1 font-gaegu text-lg">관계도</a>
+                <a href="#points" class="nav-link border-b-2 border-transparent pb-1 font-gaegu text-lg">핵심 포인트</a>
             </div>
              <button id="mobile-menu-button" class="md:hidden text-stone-700 focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden bg-[#FDFBF8] py-2">
-            <a href="#overview" class="block text-center py-2 text-sm text-stone-700 hover:bg-amber-50">개요</a>
-            <a href="#characters" class="block text-center py-2 text-sm text-stone-700 hover:bg-amber-50">등장인물</a>
-            <a href="#relationship" class="block text-center py-2 text-sm text-stone-700 hover:bg-amber-50">관계도</a>
-            <a href="#points" class="block text-center py-2 text-sm text-stone-700 hover:bg-amber-50">핵심 포인트</a>
+            <a href="#overview" class="block text-center py-2 text-stone-700 hover:bg-amber-50 font-gaegu text-base">개요</a>
+            <a href="#characters" class="block text-center py-2 text-stone-700 hover:bg-amber-50 font-gaegu text-base">등장인물</a>
+            <a href="#relationship" class="block text-center py-2 text-stone-700 hover:bg-amber-50 font-gaegu text-base">관계도</a>
+            <a href="#points" class="block text-center py-2 text-stone-700 hover:bg-amber-50 font-gaegu text-base">핵심 포인트</a>
         </div>
     </header>
 
     <main>
-        <section id="hero" class="h-[60vh] md:h-[80vh] flex items-center justify-center bg-amber-50">
-            <div class="text-center px-4">
-                <h1 class="text-4xl md:text-6xl font-bold text-[#832729] mb-4">달콤한 재회</h1>
-                <p class="text-lg md:text-xl text-stone-600 max-w-3xl mx-auto">
-                    10년 전 오해로 헤어졌던 첫사랑이, 혹평을 ���삼는 냉정한 디저트 장인과 구독자 100만의 긍정 에너지 푸드 크리에이터로 다시 만나 서로의 상처를 치유하고 다시 사랑에 빠지는 이야기.
+        <section id="hero" class="min-h-[80vh] flex items-center justify-center notebook-bg relative overflow-hidden py-16">
+            <div class="text-center px-4 relative z-10">
+                <h1 class="text-5xl md:text-7xl font-bold text-[#832729] mb-4 font-gaegu">달콤한 재회</h1>
+                <p class="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto">
+                    전교 1등을 놓치지 않는 철벽 모범생과 학교의 모든 소식을 전하는 익명의 SNS 운영자. 사소한 오해로 멀어졌던 두 사람이 같은 반이 되며 서로의 비밀과 상처를 마주하는 청춘 학원 로맨스.
                 </p>
+            </div>
+            
+            <!-- Doodle Elements -->
+            <div class="absolute top-1/4 left-1/4 text-4xl text-amber-400 opacity-70 transform -rotate-12">✨</div>
+            <div class="absolute top-1/3 right-1/4 text-3xl text-red-300 opacity-80 transform rotate-12">♥</div>
+            <div class="absolute bottom-1/4 left-1/3 text-2xl text-blue-300 opacity-70">💬</div>
+            
+            <div class="hidden md:block absolute top-20 right-20 bg-white p-4 shadow-xl transform rotate-6 border-4 border-white">
+                <div class="border-2 border-dashed border-amber-200 p-2">
+                    <p class="font-bold text-stone-700">권도윤 <span class="text-red-400">&</span> 정해원</p>
+                    <p class="text-sm text-stone-500">세빛고 3학년 2반</p>
+                    <p class="font-gaegu text-lg text-right mt-2">...우리 다시?</p>
+                </div>
+            </div>
+             <div class="hidden md:block absolute bottom-24 left-24 bg-yellow-100 p-3 shadow-lg transform -rotate-12">
+                <p class="font-gaegu text-xl text-stone-700">#학원물 #첫사랑</p>
+                <p class="font-gaegu text-xl text-stone-700">#오해 #성장로맨스</p>
             </div>
         </section>
 
         <section id="overview" class="py-20 md:py-28 bg-[#FDFBF8]">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-bold text-center text-[#832729] mb-4">작품 개요</h2>
-                <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">이 작품은 현대 로맨스를 기반으로 '재회'와 '성장'이라는 보편적 감성을 자극하며, '한식 디저트'라는 신선한 소재를 통해 독자들에게 따뜻한 위로와 감동을 선사하는 것을 목표로 합니다.</p>
+                <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">이 작품은 '학원물'을 배경으로 10대들의 풋풋한 사랑과 성장을 그립니다. '오해'로 시작된 관계가 서로를 이해하는 과정으로 발전하며, 입시와 우정 사이에서 고민하는 청춘들의 모습을 통해 독자들의 공감을 얻고자 합니다.</p>
                 <div class="max-w-4xl mx-auto bg-white p-8 md:p-10 rounded-xl shadow-lg border border-amber-100">
                     <div class="mb-6">
                         <h3 class="font-bold text-amber-700 mb-2">장르</h3>
-                        <p class="text-stone-700">현대 로맨스, BL, 재회물, 힐링물, 전문직물</p>
+                        <p class="text-stone-700">현대 로맨스, BL, 학원물, 성장물, 오해/삽질물</p>
                     </div>
                     <div>
                         <h3 class="font-bold text-amber-700 mb-2">시놉시스</h3>
-                        <p class="text-stone-700 leading-relaxed">10년 전, 세상의 전부였던 '권도윤'과 '정해원'. 졸업식 날 도윤의 일방적인 이별 통보로 허무하게 끝이 난다. 10년 후, 유명 푸드 크리에이터가 된 해원은 최고급 한식 디저트 공방 '미정당'에서 장인이 된 도윤과 운명적으로 재회한다. 차갑게 밀어내는 도윤에게 해원은 포기하지 않고 다가가고, 그 과정에서 10년 전 이별에 숨겨진 오해와 아픈 사연이 있었음을 알게 된다. 달콤 쌉싸름한 디저트처럼, 두 사람은 어색한 재회 속에서 서로의 진심을 깨달으며 서서히 다시 스며든다.</p>
+                        <p class="text-stone-700 leading-relaxed">전교 1등 모범생 '권도윤'과 핵인싸 '정해원'은 1학년 때만 해도 가장 친한 친구였다. 하지만 2학년 초, 사소한 오해로 둘의 사이는 멀어진다. 3학년이 되어 같은 반 짝꿍으로 재회한 두 사람. 해원은 다시 다가가려 하지만 도윤은 차갑기만 하다. 사실 해원은 학교의 비밀을 전하는 익명의 SNS '세빛고 대나무숲'의 운영자. 도윤에 대한 제보가 쏟아지자, 해원은 그의 소문을 해명하기 위해 고군분투한다. 그 과정에서 해원은 도윤이 홀로 감당해온 압박감과 상처를, 도윤은 해원의 진심을 알게 되며 닫혔던 마음의 문을 열기 시작한다.</p>
                     </div>
                 </div>
             </div>
@@ -118,13 +143,13 @@
         <section id="characters" class="py-20 md:py-28 bg-amber-50">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-bold text-center text-[#832729] mb-4">주요 등장인물</h2>
-                <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">상반된 매력을 가진 두 주���공을 만나보세요. 탭을 클릭하여 각 인물의 외모, 성격, 숨겨진 배경 이야기를 자세히 살펴볼 수 있습니다.</p>
+                <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">상반된 매력을 가진 두 주인공을 만나보세요. 탭을 클릭하여 각 인물의 외모, 성격, 숨겨진 배경 이야기를 자세히 살펴볼 수 있습니다.</p>
                 <div class="grid md:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
                     
                     <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-amber-100">
                         <div class="text-center mb-6">
-                            <h3 class="text-2xl font-bold text-stone-800">권도윤 (공, 29)</h3>
-                            <p class="text-amber-700 font-medium">#까칠공 #장인공 #상처공 #후회공</p>
+                            <h3 class="text-2xl font-bold text-stone-800">권도윤 (공, 18)</h3>
+                            <p class="text-amber-700 font-medium">#미남공 #모범생공 #까칠공 #상처공</p>
                         </div>
                         <div class="mb-4 flex justify-center border-b border-stone-200">
                             <button data-char="doyoon" data-tab="1" class="tab active px-4 py-2 text-sm font-medium text-stone-600">외모</button>
@@ -132,16 +157,16 @@
                             <button data-char="doyoon" data-tab="3" class="tab px-4 py-2 text-sm font-medium text-stone-600">배경</button>
                         </div>
                         <div class="text-stone-700 leading-relaxed min-h-[150px]">
-                            <p data-char="doyoon" data-content="1" class="tab-content active">긴 손가락과 단정한 용모, 한복을 연상시키는 작업복이 잘 어울리는 고전적인 미남.</p>
-                            <p data-char="doyoon" data-content="2" class="tab-content">타인에게 쉽게 마음을 열지 않는 완벽주의자. 디저트에는 한 치의 양보도 없지만, 내면에는 과거의 상처와 해원에 대한 미련이 있다. 표현이 서툴고 무뚝뚝하지만 사실 속이 깊다.</p>
-                            <p data-char="doyoon" data-content="3" class="tab-content">유명 종갓집 차남이었으나, 집안의 억압과 반대로 꿈과 사랑을 포기해야 했다. 홀로 '미정당'을 차려 최고의 장인이 되었지만 마음 한편은 늘 공허하다.</p>
+                            <p data-char="doyoon" data-content="1" class="tab-content active">단정한 교복과 안경이 잘 어울리는 냉미남. 무심한 듯 보이지만 운동으로 다져진 탄탄한 체격의 소유자.</p>
+                            <p data-char="doyoon" data-content="2" class="tab-content">전교 1등을 놓치지 않는 완벽주의자. 타인에게 관심 없는 듯 행동하며 철벽을 치지만, 사실은 외로움을 많이 타고 정에 약하다.</p>
+                            <p data-char="doyoon" data-content="3" class="tab-content">법조인 집안의 장남으로, 부모님의 높은 기대와 압박감에 시달린다. 공부가 유일한 탈출구라고 생각하며 감정을 드러내지 않는다.</p>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-amber-100">
                         <div class="text-center mb-6">
-                            <h3 class="text-2xl font-bold text-stone-800">정해원 (수, 29)</h3>
-                            <p class="text-amber-700 font-medium">#햇살수 #직진수 #유튜버수 #짝사랑수</p>
+                            <h3 class="text-2xl font-bold text-stone-800">정해원 (수, 18)</h3>
+                            <p class="text-amber-700 font-medium">#미인수 #햇살수 #인싸수 #짝사랑수</p>
                         </div>
                         <div class="mb-4 flex justify-center border-b border-stone-200">
                             <button data-char="haewon" data-tab="1" class="tab active px-4 py-2 text-sm font-medium text-stone-600">외모</button>
@@ -149,9 +174,9 @@
                             <button data-char="haewon" data-tab="3" class="tab px-4 py-2 text-sm font-medium text-stone-600">배경</button>
                         </div>
                         <div class="text-stone-700 leading-relaxed min-h-[150px]">
-                            <p data-char="haewon" data-content="1" class="tab-content active">웃는 모습이 매력적인, 밝고 화사한 인상의 미인. 트렌디한 패션 감각을 자랑한다.</p>
-                            <p data-char="haewon" data-content="2" class="tab-content">긍정적이고 활발한 에너지의 소유자. 카메라 앞에선 프로지만, 사실 상처받는 것을 두려워하는 여린 내면을 가졌다. 도윤 앞에서만은 고등학생처럼 솔직하고 순수해진다.</p>
-                            <p data-char="haewon" data-content="3" class="tab-content">평범하고 화목한 가정에서 사랑받고 자랐다. 도윤과의 이별 후 슬픔을 잊기 위해 음식을 찾아다니다 푸드 크리에이터가 되었다. 10년이 지나도 도윤이 마지막 사랑이라 믿고 있다.</p>
+                            <p data-char="haewon" data-content="1" class="tab-content active">웃는 모습이 예쁜 과즙상 미인. 자유분방한 사복 패션 센스가 뛰어나 교내에서 인기가 많다.</p>
+                            <p data-char="haewon" data-content="2" class="tab-content">밝고 사교성이 좋아 누구와도 금방 친해지는 '핵인싸'. 하지만 익명의 SNS 계정 뒤에서는 남모를 고민과 상처를 털어놓는다.</p>
+                            <p data-char="haewon" data-content="3" class="tab-content">화목한 가정에서 자랐다. 친구들의 고민을 들어주는 것을 좋아해 익명의 SNS를 시작했다. 멀어진 도윤을 남몰래 계속 신경 쓰고 있다.</p>
                         </div>
                     </div>
                 </div>
@@ -161,7 +186,7 @@
         <section id="relationship" class="py-20 md:py-28 bg-[#FDFBF8]">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-bold text-center text-[#832729] mb-4">두 사람의 관계</h2>
-                <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">두 사람의 복잡하고 애틋한 관계성을 한눈에 파악해 보세요. 성격 차이를 비교하고, 10년에 걸친 감정 변화를 타임라인으로 따라가며 이야기에 더 깊이 몰입할 수 있습니다.</p>
+                <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">두 사람의 복잡하고 애틋한 관계성을 한눈에 파악해 보세요. 성격 차이를 비교하고, 학년별 감정 변화를 타임라인으로 따라가며 이야기에 더 깊이 몰입할 수 있습니다.</p>
                 
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="order-2 lg:order-1">
@@ -175,28 +200,28 @@
                         <h3 class="text-xl font-bold text-center text-stone-800 mb-6">관계 타임라인</h3>
                         <div class="relative pl-8 border-l-2 border-amber-200">
                             
-                            <div class="mb-8 timeline-item" data-story="10년 전, 서로가 세상의 전부였던 두 사람. 풋풋하고 순수한 첫사랑의 감정을 키워나간다.">
+                            <div class="mb-8 timeline-item" data-story="1학년, 같은 반이 되어 둘도 없는 단짝 친구가 된다. 서로의 비밀을 공유하며 가장 가까운 사이로 발전한다.">
                                 <div class="absolute w-4 h-4 bg-[#832729] rounded-full -left-2 ring-4 ring-amber-100"></div>
-                                <p class="font-bold text-stone-800">10년 전: 첫사랑</p>
-                                <p class="text-sm text-stone-500">가장 순수했던 시절</p>
+                                <p class="font-bold text-stone-800">1학년: 단짝 친구</p>
+                                <p class="text-sm text-stone-500">가장 행복했던 시절</p>
                             </div>
 
-                            <div class="mb-8 timeline-item" data-story="졸업식 날, 도윤은 집안의 압박과 자신의 상황 때문에 해원에게 일방적으로 이별을 통보한다.">
+                            <div class="mb-8 timeline-item" data-story="2학년, 사소한 말다툼과 주변의 이간질로 오해가 쌓여 둘은 점차 멀어지게 된다.">
                                 <div class="absolute w-4 h-4 bg-[#832729] rounded-full -left-2 ring-4 ring-amber-100"></div>
-                                <p class="font-bold text-stone-800">10년 전: 오해와 이별</p>
-                                <p class="text-sm text-stone-500">말하지 못한 진심</p>
+                                <p class="font-bold text-stone-800">2학년: 오해와 단절</p>
+                                <p class="text-sm text-stone-500">엇갈린 진심</p>
                             </div>
 
-                            <div class="mb-8 timeline-item" data-story="푸드 크리에이터가 된 해원과 디저트 장인이 된 도윤, '미정당'에서 운명처럼 다시 만난다.">
+                            <div class="mb-8 timeline-item" data-story="3학년, 같은 반 짝꿍으로 재회. 해원은 다가가려 하지만 도윤은 냉담하게 반응하며 갈등이 시작된다.">
                                 <div class="absolute w-4 h-4 bg-[#832729] rounded-full -left-2 ring-4 ring-amber-100"></div>
-                                <p class="font-bold text-stone-800">현재: 재회</p>
-                                <p class="text-sm text-stone-500">어색하고 차가운 만남</p>
+                                <p class="font-bold text-stone-800">3학년 초: 어색한 재회</p>
+                                <p class="text-sm text-stone-500">다시 시작된 관계</p>
                             </div>
 
-                            <div class="timeline-item" data-story="해원은 도윤의 디저트에 담긴 진심을 발견하고, 도윤은 해원의 변치않는 마음에 흔들린다. 두 사람은 과거의 오해를 풀고 서로의 상처를 보듬는다.">
+                            <div class="timeline-item" data-story="학교 축제와 시험 기간을 거치며 서로의 진심과 상처를 알게 된 두 사람은 오랜 오해를 풀고 다시 서로에게 스며든다.">
                                 <div class="absolute w-4 h-4 bg-[#832729] rounded-full -left-2 ring-4 ring-amber-100"></div>
-                                <p class="font-bold text-stone-800">미래: 치유와 사랑</p>
-                                <p class="text-sm text-stone-500">다시 시작되는 달콤한 인연</p>
+                                <p class="font-bold text-stone-800">3학년 말: 화해와 사랑</p>
+                                <p class="text-sm text-stone-500">친구에서 연인으로</p>
                             </div>
                         </div>
                         <div id="story-display" class="mt-8 p-4 bg-amber-50 rounded-lg text-center text-stone-700 min-h-[80px] flex items-center justify-center">
@@ -210,25 +235,25 @@
         <section id="points" class="py-20 md:py-28 bg-amber-50">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-bold text-center text-[#832729] mb-4">작품의 핵심 포인트</h2>
-                 <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">이 작품은 단순한 BL을 넘어, 독자들에게 새로운 경험과 깊은 공감을 선사할 세 가지 특별한 강점을 가지고 있습니다.</p>
+                 <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">이 작품은 단순한 BL을 넘어, 10대 독자들에게 새로운 경험과 깊은 공감을 선사할 세 가지 특별한 강점을 가지고 있습니다.</p>
                 <div class="grid md:grid-cols-3 gap-8 text-center max-w-5xl mx-auto">
                     
                     <div class="bg-white p-8 rounded-xl shadow-lg border border-amber-100">
-                        <div class="text-4xl text-[#832729] mb-4">✿</div>
-                        <h3 class="text-xl font-bold text-stone-800 mb-2">'한식 디저트'의 매력</h3>
-                        <p class="text-stone-600 leading-relaxed">약과, 개성주악 등 한국의 미가 담긴 디저트를 통해 시각적 즐거움과 함께 두 주인공의 감정선을 섬세하게 연결합니다.</p>
+                        <div class="text-4xl text-[#832729] mb-4">📱</div>
+                        <h3 class="text-xl font-bold text-stone-800 mb-2">'익명 SNS' 소재 활용</h3>
+                        <p class="text-stone-600 leading-relaxed">익명의 공간에서 드러나는 진심과 소문이라는 소재를 통해 사건의 긴장감을 높이고 캐릭터의 내면을 섬세하게 묘사합니다.</p>
                     </div>
 
                     <div class="bg-white p-8 rounded-xl shadow-lg border border-amber-100">
                          <div class="text-4xl text-[#832729] mb-4">♥</div>
                         <h3 class="text-xl font-bold text-stone-800 mb-2">입체적인 관계성</h3>
-                        <p class="text-stone-600 leading-relaxed">'까칠 후회공'과 '밝은 직진수' 조합으로 10년의 오해와 애증을 풀어내며 독자들의 깊은 몰입을 유도합니다.</p>
+                        <p class="text-stone-600 leading-relaxed">'까칠 모범생'과 '햇살 인싸' 조합으로 오해와 화해의 과정을 그리며 독자들의 깊은 몰입을 유도합니다.</p>
                     </div>
 
                     <div class="bg-white p-8 rounded-xl shadow-lg border border-amber-100">
                          <div class="text-4xl text-[#832729] mb-4">✨</div>
-                        <h3 class="text-xl font-bold text-stone-800 mb-2">공감가는 현실 배경</h3>
-                        <p class="text-stone-600 leading-relaxed">'유튜버'와 '장인'이라는 현대적인 직업 설정으로 폭넓은 독자층의 공감과 흥미를 유발합니다.</p>
+                        <h3 class="text-xl font-bold text-stone-800 mb-2">청춘들의 성장 서사</h3>
+                        <p class="text-stone-600 leading-relaxed">입시, 우정, 꿈 등 10대라면 누구나 공감할 현실적인 고민을 녹여내어 캐릭터들의 성장을 응원하게 만듭니다.</p>
                     </div>
                 </div>
             </div>
@@ -237,8 +262,8 @@
 
     <footer class="bg-stone-800 text-white py-8">
         <div class="container mx-auto px-6 text-center">
-            <p class="font-bold text-lg mb-2">달콤한 재회</p>
-            <p class="text-sm text-stone-400">BL 웹소설/웹툰 인터랙티브 기획안</p>
+            <p class="font-bold text-lg mb-2 font-gaegu">달콤한 재회</p>
+            <p class="text-sm text-stone-400">BL 웹소설/웹툰 인터랙티브 기획안 (학원물 Ver.)</p>
         </div>
     </footer>
 
