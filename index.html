@@ -1,400 +1,435 @@
+
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인터랙티브 기획안: 달콤한 재회 (학원물 Ver.)</title>
+    <title>K-숏폼 드라마 베트남 파트너십 제안</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals & Rose -->
-    <!-- Application Structure Plan: 기획안의 정보를 효과적으로 전달하기 위해 '캐릭터 중심의 인터랙티브 대시보드' 구조를 설계했습니다. 사용자는 상단 네비게이션을 통해 원하는 정보(개요, 등장인물, 관계도, 핵심 포인트)로 즉시 이동할 수 있습니다. 특히 '등장인물' 섹션에서는 탭 인터페이스를 통해 각 인물의 상세 정보를 깊이 있게 탐색할 수 있으며, '관계도' 섹션에서는 차트와 타임라인을 통해 두 주인공의 복잡한 서사를 시각적으로 쉽게 이해할 수 있도록 구성했습니다. 이 구조는 사용자가 수동적으로 텍스트를 읽는 대신, 능동적으로 정보를 발견하고 스토리에 몰입하도록 유도하기 위해 선택되었습니다. -->
-    <!-- Visualization & Content Choices: 1. 인물 비교 (Goal: Compare): '관계도' 섹션에서 두 주인공의 상반된 성격 키워드를 Chart.js의 '레이더 차트'로 시각화했습니다. 이는 '까칠 모범생'과 '햇살 인싸'라는 핵심적인 캐릭터 대비를 직관적으로 보여주어 관계성의 매력을 극대화합니다. 2. 관계 변화 (Goal: Change): 두 인물의 학창 시절 관계 변화를 HTML/CSS/JS로 구현한 '인터랙티브 타임라인'으로 표현했습니다. 각 시점을 클릭하면 관련 시놉시스 내용이 나타나, 사용자가 시간의 흐름에 따른 감정 변화를 쉽게 따라갈 수 있도록 돕습니다. 3. 핵심 강점 (Goal: Inform): 작품의 강점 세 가지를 아이콘이 포함된 정보 카드로 디자인하여 가독성을 높이고 핵심 메시지를 명확하게 전달합니다. 모든 시각 자료는 사용자의 이해를 돕고 상호작용을 유도하기 위해 선택되었습니다. -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral Harmony -->
+    <!-- Application Structure Plan: The application is designed as a top-to-bottom narrative funnel. It starts with a compelling headline (Hero), presents the market opportunity with interactive stats and a chart (The Opportunity), allows deep exploration of the core offering via a filterable and collapsible content gallery (Our Library), outlines the mutual benefits (Partnership), and ends with a clear call to action (Contact). This structure is chosen over a direct PPT-to-web conversion to guide the potential partner through a journey of discovery and persuasion, making the value proposition tangible and engaging. -->
+    <!-- Visualization & Content Choices: 
+    - Market Growth (Report Info) -> Goal: Inform/Impress -> Viz: Chart.js Line Chart -> Interaction: Animated load, tooltips -> Justification: Visually demonstrates the lucrative market trend, more impactful than static numbers. Library: Chart.js.
+    - Core Competencies (Report Info) -> Goal: Build Confidence -> Viz: Icon-based info cards -> Interaction: Subtle hover effects -> Justification: Enhances readability and visual appeal over simple text. Library: Tailwind CSS.
+    - Drama Lineup (Report Info) -> Goal: Showcase Content/Engage -> Viz: Interactive Poster Gallery with simplified filters and a show/hide toggle -> Interaction: Main genre filtering, modal pop-up for details, gallery expand/collapse -> Justification: Improves usability by reducing filter clutter and managing long content lists effectively. Library: Vanilla JS, Tailwind CSS.
+    - Partnership Model (Report Info) -> Goal: Clarify Benefits -> Viz: Single focused column with icons -> Interaction: None -> Justification: Clear, scannable list of partner benefits, removing distractions. Library: Tailwind CSS.
+    -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
-        }
-        .font-gaegu {
-            font-family: 'Gaegu', cursive;
-        }
-        .nav-link {
-            transition: color 0.3s, border-bottom-color 0.3s;
-        }
-        .nav-link:hover {
-            color: #832729;   
-            border-bottom-color: #832729;
-        }
-        .active-link {
-            color: #832729;
-            border-bottom-color: #832729;
-            font-weight: 700;
-        }
-        .tab {
-            transition: all 0.3s;
-        }
-        .tab.active {
-            background-color: #832729;
-            color: #ffffff;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        .timeline-item {
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-        }
-        .timeline-item:hover {
-            transform: translateY(-5px);
+            background-color: #f8f7f4;
         }
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 500px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-            height: 350px;
-            max-height: 400px;
+            height: 300px;
         }
         @media (min-width: 768px) {
             .chart-container {
                 height: 400px;
             }
         }
-        .notebook-bg {
-             background-color: #FDFBF8;
-             background-image: linear-gradient(to bottom, transparent 95%, #EAD9C9 95%);
-             background-size: 100% 2rem;
+        .modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
         }
     </style>
 </head>
-<body class="bg-[#FDFBF8] text-stone-800">
+<body class="text-gray-800">
 
-    <header id="header" class="bg-[#FDFBF8]/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#hero" class="text-2xl font-bold text-[#832729] font-gaegu">달콤한 재회</a>
-            <div class="hidden md:flex space-x-8 items-center">
-                <a href="#overview" class="nav-link border-b-2 border-transparent pb-1 font-gaegu text-lg">개요</a>
-                <a href="#characters" class="nav-link border-b-2 border-transparent pb-1 font-gaegu text-lg">등장인물</a>
-                <a href="#relationship" class="nav-link border-b-2 border-transparent pb-1 font-gaegu text-lg">관계도</a>
-                <a href="#points" class="nav-link border-b-2 border-transparent pb-1 font-gaegu text-lg">핵심 포인트</a>
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-sky-800">K-Shortform Proposal</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#opportunity" class="text-gray-600 hover:text-sky-700 px-3 py-2 rounded-md text-sm font-medium">시장 잠재력</a>
+                        <a href="#library" class="text-gray-600 hover:text-sky-700 px-3 py-2 rounded-md text-sm font-medium">콘텐츠 라이브러리</a>
+                        <a href="#partnership" class="text-gray-600 hover:text-sky-700 px-3 py-2 rounded-md text-sm font-medium">파트너십 모델</a>
+                        <a href="#contact" class="bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-sky-800">문의하기</a>
+                    </div>
+                </div>
             </div>
-             <button id="mobile-menu-button" class="md:hidden text-stone-700 focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
         </nav>
-        <div id="mobile-menu" class="hidden md:hidden bg-[#FDFBF8] py-2">
-            <a href="#overview" class="block text-center py-2 text-stone-700 hover:bg-amber-50 font-gaegu text-base">개요</a>
-            <a href="#characters" class="block text-center py-2 text-stone-700 hover:bg-amber-50 font-gaegu text-base">등장인물</a>
-            <a href="#relationship" class="block text-center py-2 text-stone-700 hover:bg-amber-50 font-gaegu text-base">관계도</a>
-            <a href="#points" class="block text-center py-2 text-stone-700 hover:bg-amber-50 font-gaegu text-base">핵심 포인트</a>
-        </div>
     </header>
 
     <main>
-        <section id="hero" class="min-h-[80vh] flex items-center justify-center notebook-bg relative overflow-hidden py-16">
-            <div class="text-center px-4 relative z-10">
-                <h1 class="text-5xl md:text-7xl font-bold text-[#832729] mb-4 font-gaegu">달콤한 재회</h1>
-                <p class="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto">
-                    전교 1등을 놓치지 않는 철벽 모범생과 학교의 모든 소식을 전하는 익명의 SNS 운영자. 사소한 오해로 멀어졌던 두 사람이 같은 반이 되며 서로의 비밀과 상처를 마주하는 청춘 학원 로맨스.
+        <!-- Section 1: Hero -->
+        <section class="relative h-[60vh] md:h-[80vh] flex items-center justify-center text-center bg-gray-200 overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                 <img src="https://placehold.co/1920x1080/1e293b/f8f7f4?text=+" alt="Background Image" class="w-full h-full object-cover opacity-30">
+            </div>
+            <div class="relative z-10 p-4">
+                <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                    <span class="block">1,000편 이상의 K-숏폼 드라마로</span>
+                    <span class="block text-sky-700 mt-2">베트남 시장을 선도합니다</span>
+                </h2>
+                <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-gray-700">
+                    압도적인 콘텐츠 라이브러리를 통해 베트남 숏폼 시장의 판도를 바꿀 최고의 파트너십을 제안합니다.
                 </p>
             </div>
-            
-            <!-- Doodle Elements -->
-            <div class="absolute top-1/4 left-1/4 text-4xl text-amber-400 opacity-70 transform -rotate-12">✨</div>
-            <div class="absolute top-1/3 right-1/4 text-3xl text-red-300 opacity-80 transform rotate-12">♥</div>
-            <div class="absolute bottom-1/4 left-1/3 text-2xl text-blue-300 opacity-70">💬</div>
-            
-            <div class="hidden md:block absolute top-20 right-20 bg-white p-4 shadow-xl transform rotate-6 border-4 border-white">
-                <div class="border-2 border-dashed border-amber-200 p-2">
-                    <p class="font-bold text-stone-700">권도윤 <span class="text-red-400">&</span> 정해원</p>
-                    <p class="text-sm text-stone-500">세빛고 3학년 2반</p>
-                    <p class="font-gaegu text-lg text-right mt-2">...우리 다시?</p>
-                </div>
-            </div>
-             <div class="hidden md:block absolute bottom-24 left-24 bg-yellow-100 p-3 shadow-lg transform -rotate-12">
-                <p class="font-gaegu text-xl text-stone-700">#학원물 #첫사랑</p>
-                <p class="font-gaegu text-xl text-stone-700">#오해 #성장로맨스</p>
-            </div>
         </section>
 
-        <section id="overview" class="py-20 md:py-28 bg-[#FDFBF8]">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center text-[#832729] mb-4">작품 개요</h2>
-                <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">이 작품은 '학원물'을 배경으로 10대들의 풋풋한 사랑과 성장을 그립니다. '오해'로 시작된 관계가 서로를 이해하는 과정으로 발전하며, 입시와 우정 사이에서 고민하는 청춘들의 모습을 통해 독자들의 공감을 얻고자 합니다.</p>
-                <div class="max-w-4xl mx-auto bg-white p-8 md:p-10 rounded-xl shadow-lg border border-amber-100">
-                    <div class="mb-6">
-                        <h3 class="font-bold text-amber-700 mb-2">장르</h3>
-                        <p class="text-stone-700">현대 로맨스, BL, 학원물, 성장물, 오해/삽질물</p>
+        <!-- Section 2: The Opportunity -->
+        <section id="opportunity" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">기회의 땅, 베트남 시장의 잠재력</h3>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">모바일 중심의 젊은 세대가 이끄는 베트남의 숏폼 콘텐츠 시장은 폭발적으로 성장하고 있으며, K-콘텐츠에 대한 높은 선호도는 성공을 위한 최적의 환경을 제공합니다.</p>
+                </div>
+                <div class="mt-16">
+                    <div class="chart-container">
+                        <canvas id="marketGrowthChart"></canvas>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-amber-700 mb-2">시놉시스</h3>
-                        <p class="text-stone-700 leading-relaxed">전교 1등 모범생 '권도윤'과 핵인싸 '정해원'은 1학년 때만 해도 가장 친한 친구였다. 하지만 2학년 초, 사소한 오해로 둘의 사이는 멀어진다. 3학년이 되어 같은 반 짝꿍으로 재회한 두 사람. 해원은 다시 다가가려 하지만 도윤은 차갑기만 하다. 사실 해원은 학교의 비밀을 전하는 익명의 SNS '세빛고 대나무숲'의 운영자. 도윤에 대한 제보가 쏟아지자, 해원은 그의 소문을 해명하기 위해 고군분투한다. 그 과정에서 해원은 도윤이 홀로 감당해온 압박감과 상처를, 도윤은 해원의 진심을 알게 되며 닫혔던 마음의 문을 열기 시작한다.</p>
-                    </div>
+                    <p class="text-center mt-2 text-sm text-gray-500">베트남 숏폼 드라마 시장 규모 전망 (단위: 백만 달러)</p>
                 </div>
             </div>
         </section>
 
-        <section id="characters" class="py-20 md:py-28 bg-amber-50">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center text-[#832729] mb-4">주요 등장인물</h2>
-                <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">상반된 매력을 가진 두 주인공을 만나보세요. 탭을 클릭하여 각 인물의 외모, 성격, 숨겨진 배경 이야기를 자세히 살펴볼 수 있습니다.</p>
-                <div class="grid md:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
-                    
-                    <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-amber-100">
-                        <div class="text-center mb-6">
-                            <h3 class="text-2xl font-bold text-stone-800">권도윤 (공, 18)</h3>
-                            <p class="text-amber-700 font-medium">#미남공 #모범생공 #까칠공 #상처공</p>
-                        </div>
-                        <div class="mb-4 flex justify-center border-b border-stone-200">
-                            <button data-char="doyoon" data-tab="1" class="tab active px-4 py-2 text-sm font-medium text-stone-600">외모</button>
-                            <button data-char="doyoon" data-tab="2" class="tab px-4 py-2 text-sm font-medium text-stone-600">성격</button>
-                            <button data-char="doyoon" data-tab="3" class="tab px-4 py-2 text-sm font-medium text-stone-600">배경</button>
-                        </div>
-                        <div class="text-stone-700 leading-relaxed min-h-[150px]">
-                            <p data-char="doyoon" data-content="1" class="tab-content active">단정한 교복과 안경이 잘 어울리는 냉미남. 무심한 듯 보이지만 운동으로 다져진 탄탄한 체격의 소유자.</p>
-                            <p data-char="doyoon" data-content="2" class="tab-content">전교 1등을 놓치지 않는 완벽주의자. 타인에게 관심 없는 듯 행동하며 철벽을 치지만, 사실은 외로움을 많이 타고 정에 약하다.</p>
-                            <p data-char="doyoon" data-content="3" class="tab-content">법조인 집안의 장남으로, 부모님의 높은 기대와 압박감에 시달린다. 공부가 유일한 탈출구라고 생각하며 감정을 드러내지 않는다.</p>
-                        </div>
+        <!-- Section 3: Our Unmatched Library -->
+        <section id="library" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">1,000+ 독보적인 K-드라마 라이브러리</h3>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">로맨스부터 스릴러까지, 모든 장르를 아우르는 방대한 라이브러리를 통해 베트남 시청자들의 다양한 니즈를 완벽하게 충족시킬 수 있습니다.</p>
+                </div>
+
+                <div class="mt-12">
+                    <div id="genre-filters" class="flex justify-center flex-wrap gap-2 md:gap-4 mb-8">
+                        <button class="genre-filter-btn active" data-genre="all">전체보기</button>
+                        <!-- Genre buttons will be injected here -->
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-amber-100">
-                        <div class="text-center mb-6">
-                            <h3 class="text-2xl font-bold text-stone-800">정해원 (수, 18)</h3>
-                            <p class="text-amber-700 font-medium">#미인수 #햇살수 #인싸수 #짝사랑수</p>
-                        </div>
-                        <div class="mb-4 flex justify-center border-b border-stone-200">
-                            <button data-char="haewon" data-tab="1" class="tab active px-4 py-2 text-sm font-medium text-stone-600">외모</button>
-                            <button data-char="haewon" data-tab="2" class="tab px-4 py-2 text-sm font-medium text-stone-600">성격</button>
-                            <button data-char="haewon" data-tab="3" class="tab px-4 py-2 text-sm font-medium text-stone-600">배경</button>
-                        </div>
-                        <div class="text-stone-700 leading-relaxed min-h-[150px]">
-                            <p data-char="haewon" data-content="1" class="tab-content active">웃는 모습이 예쁜 과즙상 미인. 자유분방한 사복 패션 센스가 뛰어나 교내에서 인기가 많다.</p>
-                            <p data-char="haewon" data-content="2" class="tab-content">밝고 사교성이 좋아 누구와도 금방 친해지는 '핵인싸'. 하지만 익명의 SNS 계정 뒤에서는 남모를 고민과 상처를 털어놓는다.</p>
-                            <p data-char="haewon" data-content="3" class="tab-content">화목한 가정에서 자랐다. 친구들의 고민을 들어주는 것을 좋아해 익명의 SNS를 시작했다. 멀어진 도윤을 남몰래 계속 신경 쓰고 있다.</p>
-                        </div>
+                    <div id="drama-gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                        <!-- Drama posters will be injected here by JavaScript -->
+                    </div>
+                    <div id="gallery-controls" class="text-center mt-8">
+                        <!-- "Show More" button will be injected here -->
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="relationship" class="py-20 md:py-28 bg-[#FDFBF8]">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center text-[#832729] mb-4">두 사람의 관계</h2>
-                <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">두 사람의 복잡하고 애틋한 관계성을 한눈에 파악해 보세요. 성격 차이를 비교하고, 학년별 감정 변화를 타임라인으로 따라가며 이야기에 더 깊이 몰입할 수 있습니다.</p>
-                
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
-                    <div class="order-2 lg:order-1">
-                        <h3 class="text-xl font-bold text-center text-stone-800 mb-4">성격 키워드 비교</h3>
-                        <div class="chart-container">
-                            <canvas id="personalityChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="order-1 lg:order-2">
-                        <h3 class="text-xl font-bold text-center text-stone-800 mb-6">관계 타임라인</h3>
-                        <div class="relative pl-8 border-l-2 border-amber-200">
-                            
-                            <div class="mb-8 timeline-item" data-story="1학년, 같은 반이 되어 둘도 없는 단짝 친구가 된다. 서로의 비밀을 공유하며 가장 가까운 사이로 발전한다.">
-                                <div class="absolute w-4 h-4 bg-[#832729] rounded-full -left-2 ring-4 ring-amber-100"></div>
-                                <p class="font-bold text-stone-800">1학년: 단짝 친구</p>
-                                <p class="text-sm text-stone-500">가장 행복했던 시절</p>
-                            </div>
-
-                            <div class="mb-8 timeline-item" data-story="2학년, 사소한 말다툼과 주변의 이간질로 오해가 쌓여 둘은 점차 멀어지게 된다.">
-                                <div class="absolute w-4 h-4 bg-[#832729] rounded-full -left-2 ring-4 ring-amber-100"></div>
-                                <p class="font-bold text-stone-800">2학년: 오해와 단절</p>
-                                <p class="text-sm text-stone-500">엇갈린 진심</p>
-                            </div>
-
-                            <div class="mb-8 timeline-item" data-story="3학년, 같은 반 짝꿍으로 재회. 해원은 다가가려 하지만 도윤은 냉담하게 반응하며 갈등이 시작된다.">
-                                <div class="absolute w-4 h-4 bg-[#832729] rounded-full -left-2 ring-4 ring-amber-100"></div>
-                                <p class="font-bold text-stone-800">3학년 초: 어색한 재회</p>
-                                <p class="text-sm text-stone-500">다시 시작된 관계</p>
-                            </div>
-
-                            <div class="timeline-item" data-story="학교 축제와 시험 기간을 거치며 서로의 진심과 상처를 알게 된 두 사람은 오랜 오해를 풀고 다시 서로에게 스며든다.">
-                                <div class="absolute w-4 h-4 bg-[#832729] rounded-full -left-2 ring-4 ring-amber-100"></div>
-                                <p class="font-bold text-stone-800">3학년 말: 화해와 사랑</p>
-                                <p class="text-sm text-stone-500">친구에서 연인으로</p>
-                            </div>
-                        </div>
-                        <div id="story-display" class="mt-8 p-4 bg-amber-50 rounded-lg text-center text-stone-700 min-h-[80px] flex items-center justify-center">
-                            <p>타임라인을 클릭하여 시점별 스토리를 확인하세요.</p>
-                        </div>
+        <!-- Section 4: Partnership -->
+        <section id="partnership" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">성공을 위한 파트너십</h3>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">귀사의 성공적인 비즈니스를 위해 다음과 같은 이점을 제공합니다.</p>
+                </div>
+                <div class="mt-16 max-w-2xl mx-auto">
+                    <div class="p-8 border border-gray-200 rounded-lg">
+                        <h4 class="text-2xl font-semibold text-sky-800 text-center">파트너사 Benefit</h4>
+                        <ul class="mt-6 space-y-4 text-gray-600">
+                            <li class="flex items-start"><span class="flex-shrink-0 text-sky-700 mr-2">✓</span><span>1,000편 이상의 방대하고 안정적인 작품 공급</span></li>
+                            <li class="flex items-start"><span class="flex-shrink-0 text-sky-700 mr-2">✓</span><span>K-콘텐츠 독점/선공개를 통한 플랫폼 경쟁력 극대화</span></li>
+                            <li class="flex items-start"><span class="flex-shrink-0 text-sky-700 mr-2">✓</span><span>신규 유저 유입 및 기존 유저 Lock-in 효과</span></li>
+                            <li class="flex items-start"><span class="flex-shrink-0 text-sky-700 mr-2">✓</span><span>충성도 높은 시청자 팬덤 확보 및 수익 모델 다각화</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="points" class="py-20 md:py-28 bg-amber-50">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center text-[#832729] mb-4">작품의 핵심 포인트</h2>
-                 <p class="text-center text-stone-600 mb-12 max-w-2xl mx-auto">이 작품은 단순한 BL을 넘어, 10대 독자들에게 새로운 경험과 깊은 공감을 선사할 세 가지 특별한 강점을 가지고 있습니다.</p>
-                <div class="grid md:grid-cols-3 gap-8 text-center max-w-5xl mx-auto">
-                    
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-amber-100">
-                        <div class="text-4xl text-[#832729] mb-4">📱</div>
-                        <h3 class="text-xl font-bold text-stone-800 mb-2">'익명 SNS' 소재 활용</h3>
-                        <p class="text-stone-600 leading-relaxed">익명의 공간에서 드러나는 진심과 소문이라는 소재를 통해 사건의 긴장감을 높이고 캐릭터의 내면을 섬세하게 묘사합니다.</p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-amber-100">
-                         <div class="text-4xl text-[#832729] mb-4">♥</div>
-                        <h3 class="text-xl font-bold text-stone-800 mb-2">입체적인 관계성</h3>
-                        <p class="text-stone-600 leading-relaxed">'까칠 모범생'과 '햇살 인싸' 조합으로 오해와 화해의 과정을 그리며 독자들의 깊은 몰입을 유도합니다.</p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-amber-100">
-                         <div class="text-4xl text-[#832729] mb-4">✨</div>
-                        <h3 class="text-xl font-bold text-stone-800 mb-2">청춘들의 성장 서사</h3>
-                        <p class="text-stone-600 leading-relaxed">입시, 우정, 꿈 등 10대라면 누구나 공감할 현실적인 고민을 녹여내어 캐릭터들의 성장을 응원하게 만듭니다.</p>
-                    </div>
-                </div>
+        <!-- Section 5: Contact -->
+        <section id="contact" class="py-20 bg-sky-800 text-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                 <h3 class="text-3xl font-bold tracking-tight sm:text-4xl">지금 바로 논의를 시작하세요</h3>
+                 <p class="mt-4 text-lg text-sky-100">함께 성공을 만들어갈 최적의 파트너를 기다립니다. <br>귀사와의 긍정적인 파트너십을 기대합니다.</p>
+                 <div class="mt-8">
+                     <a href="mailto:kosd3@scompanys.com" class="inline-block bg-white text-sky-800 font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-100 transition">
+                         이메일 문의하기
+                     </a>
+                 </div>
+                 <div class="mt-6 text-sky-200 text-sm">
+                     <p>담당자: 고성덕 이사 | 연락처: +82 10 6249 8222</p>
+                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-stone-800 text-white py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p class="font-bold text-lg mb-2 font-gaegu">달콤한 재회</p>
-            <p class="text-sm text-stone-400">BL 웹소설/웹툰 인터랙티브 기획안 (학원물 Ver.)</p>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 YourCompany Inc. All Rights Reserved.</p>
         </div>
     </footer>
 
+    <!-- Modal -->
+    <div id="drama-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-70 modal-backdrop opacity-0 pointer-events-none">
+        <div id="modal-content" class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform scale-95 relative">
+            <!-- Modal content will be injected here -->
+        </div>
+    </div>
+
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
 
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            
-            const mobileNavLinks = mobileMenu.querySelectorAll('a');
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
+        // mainGenres = ['로맨스/일상', '액션/스릴러', 'SF/판타지', '코미디', '일상/드라마'];
+        // --- Data ---
+        const dramas = [
+            { genre: '로맨틱 코미디', mainGenre: '로맨스/일상', title: '대표님의 파트너', synopsis: '인생 처음으로 낯선 남자(현우)와 하룻 밤을 보내게 된 수아. \n두 사람은 대표와 비서 관계로 조우하고\n비서와 대표 사이에 흐르는 묘한 기류를 표현한 로맨틱 코미디 드라마', cast: ' 정시현, 이예린, 김리한, 이서빈', url: 'https://www.youtube.com/shorts/ZRV5z4_VV00', poster: '' },
+            { genre: 'SF', mainGenre: 'SF/판타지', title: '나인투식스', synopsis: '\'퇴근도 못하고 죽는 타임루프에 갇혔다?\'\n어느 평범한 직장인이 회사 안에서 똑같은 하루가 끊임없이 반복되는\n타임루프에 갇혀버려 필사의 탈출을 하는 SF드라마', cast: '유수빈, 백승훈', url: 'https://www.youtube.com/shorts/171fnkVhGks', poster: '' },
+            { genre: '스릴러, 드라마', mainGenre: '액션/스릴러', title: '대막리 살인사건', synopsis: '친구들과의 별장 여행, 의문의 살인사건, 그리고 내가 용의자로 지목됐다.', cast: '이창인, 강예리, 정이헌 등', url: 'https://www.youtube.com/watch?v=bj2hkZ1OrfQ&t=1s', poster: '' },
+            { genre: '스릴러, 드라마', mainGenre: '액션/스릴러', title: '퍼펙트 퍼펫', synopsis: '천재적인 재능으로 장래가 유망했던 화이트해커 주인공이 사람들을\n해킹하고 조종하여 꼭두각시로 만들고 연쇄살인을 저지르는 이야기', cast: '이형규, 임솔지, 김현섭, 권구윤', url: 'https://www.youtube.com/watch?v=Gr6_plBu_10', poster: '' },
+            { genre: 'SF, 멜로, 로맨스', mainGenre: 'SF/판타지', title: '러브 아포칼립스', synopsis: '운석 러브가 떨어져 지구가 멸망하기 일주일전,\n회사에 출근한 주인공 희수와 그의 직장 상사 우진의 퀴어 로맨틱 코미디', cast: '이명준, 김성혁', url: 'https://www.youtube.com/shorts/8es3EpK9M4Q', poster: '' },
+            { genre: 'BL, 혐관, 액션', mainGenre: '액션/스릴러', title: '매치플레이', synopsis: '묵묵하게 원칙을 지키는 스턴트맨 \'재연\', 액션영화에 캐스팅된 아이돌 \'도하\'.\n앙숙이 된 두 사람 사이에 일어나는 예상치 못한 콘텐츠', cast: '오진석, 이태형', url: 'https://www.youtube.com/shorts/YPPkwmlzfGA', poster: '' },
+            { genre: '코미디, 드라마, 로맨스', mainGenre: '로맨스/일상', title: '진상컬렉션', synopsis: '소꼽친구인 민수와 소정은 오랜만에 만나 서로의 진상 손님에 대해 이야기하기 시작한다', cast: '신윤제, 이휘서', url: 'https://www.youtube.com/watch?v=qjXNIwnqPtw', poster: '' },
+            { genre: '코미디, 드라마, 로맨스', mainGenre: '코미디', title: '삐뚤빼뚤', synopsis: '무당이라는 직업을 말하기 싫었어요...\nMZ무당의 진짜 이야기', cast: '김지한,박주희,신소현,김단아,김서진,김도건', url: 'https://www.youtube.com/watch?v=74bd82mcH1Q', poster: '' },
+            { genre: '로맨스, 드라마, 스릴', mainGenre: '로맨스/일상', title: 'To.엑스', synopsis: '출처를 알 수 없는 추문, 믿었던 사람들의 의심,\n나를 외면한 애인과 절친의 바람, 무너지는 일상.', cast: '김이서, 이나, 김문기, 김도은', url: 'https://www.youtube.com/watch?v=4krxNl6Nbp8&embeds_referring_euri=https%3A%2F%2Fnamu.wiki%2F&source_ve_path=Mjg2NjY', poster: '' },
+            { genre: '로맨틱코미디', mainGenre: '로맨스/일상', title: '해야만 하는 쉐어하우스', synopsis: '정체를 숨긴 채 다가 온 조력자와 복수를 시작합니다.\n나를 배신한 모든 X들에게, 〈To.엑스〉', cast: '박시연, 지호근, 전준호, 차현승, 장은비, 유이솔', url: 'https://www.youtube.com/shorts/ZGqZ7PrfGS8', poster: '' },
+            { genre: '로맨스', mainGenre: '로맨스/일상', title: '퇴사를 요청합니다', synopsis: '저마다의 목적을 숨긴 채 한자리에 모인 싱글 남녀들! 오직 ‘본능’과 ‘이성’만이\n존재하는 이곳에서 매일 밤 은밀한 데이트가 펼쳐진다?!', cast: '이하은, 김평화, 설유안', url: 'https://www.youtube.com/watch?v=Ult9AkX1bzw', poster: '' },
+            { genre: '로맨스', mainGenre: '로맨스/일상', title: '사각지대 ', synopsis: '평범한 삶을 꿈꿨던 \'오금희\'의 인생이 꼬이기 시작했다!?\n완벽한 스펙의 소유자 \'유보라\’의 입사 후, 우연 무역에서 벌어지는 미스터리한 사건들!\', 액션영화에 캐스팅된 아이돌 \'도하\'.', cast: '박시안, 신윤섭, 강지운, 배은우', url: 'https://www.youtube.com/watch?v=4Q3XWQDZ-a8', poster: '' },
+            { genre: '로맨스 코미디', mainGenre: '로맨스/일상', title: '남친 찾기 프로젝트', synopsis: '여교사와 재벌가의 지독하게 위태로운 사각 불륜 로맨스', cast: '마츠시마 카논, 시마즈 켄', url: 'https://www.youtube.com/watch?v=jn3qEepC_rg', poster: '' },
+            { genre: '로맨틱코미디', mainGenre: '로맨스/일상', title: '내 남친은 "찐따"입니다', synopsis: '오늘의 남자친구는 누가 될까? 모태솔로 여고생의 설렘 가득 남친찾기프로젝트', cast: '빅병현, 김혜수', url: 'https://www.youtube.com/shorts/_kmJn9A4Z9E', poster: '' },
+            { genre: '하이틴', mainGenre: '일상/드라마', title: '열아홉 금지하라', synopsis: '전국 최고 찐따 남주는 어느 날 학교에서 제일 잘나가는 일진녀와\n부딪히게 되는데 찐따가 생각보다 일진녀의 스타일이다..?', cast: '홍지유, 정우진, 현지용, 김윤하', url: 'https://www.youtube.com/watch?v=AZhF5rsadQU', poster: '' },
+            { genre: '로맨틱 코미디', mainGenre: '로맨스/일상', title: '게스트하우스의 목적', synopsis: '미국에서 남자친구와 바람난 절친을 응징한 19살 유제니,\n폭풍의 전학생 유제니가 한국으로 전학을 오자 학교의 분위기가 바뀐다.', cast: '정호균, 이자민, 박산하, 송예빈 등', url: 'https://www.youtube.com/watch?v=fTN0AkiMVUA', poster: '' },
+            { genre: '추리 스릴러', mainGenre: '액션/스릴러', title: '러브 머니 마피아', synopsis: '갓 휴학한 주인공 민우는 뜨거운 연애를 위해 게스트하우스 스태프로 아르바이트로 출격한다!\n하지만 그녀의 눈앞에 펼쳐진 것은 전쟁터보다 치열한 동물의 왕국?', cast: '이하민, 이예인, 정성인 등', url: 'https://www.youtube.com/watch?v=7m0N3r3XheY', poster: '' },
+            { genre: '로맨스', mainGenre: '로맨스/일상', title: '한번만 차주라', synopsis: '결혼을 앞둔 7년 차 커플 혜선과 정호는 10억 원의 상금이 걸린 게임 프로그램 ‘러브 머니 마피아’에 초대된다.\n혜선은 과연 이 게임에서 살아남을 수 있을까?', cast: '신승호, 김수진, 최민우 등', url: 'https://www.youtube.com/watch?v=U_MODa2db5M', poster: '' },
+            { genre: '로맨스', mainGenre: '로맨스/일상', title: '오늘부터 재벌집을 파괴하겠습니다', synopsis: '가짜 고백으로 시작된 찐 연애 이야기! 연주는 술 게임 벌칙으로 고등 동창 재민에게 고백하게 되고,\n우연히 시작된 연애를 끝내기 위해 \'차이기 프로젝트\'를 시작한다.', cast: '신기성, 김지은, 박상혁, 김예진, 박지원', url: 'https://www.youtube.com/watch?v=vrq6wWA9Tyk', poster: '' },
+            { genre: '로맨스', mainGenre: '로맨스/일상', title: '연애 뒷담화', synopsis: '어느 날 서린은 극단적인 선택으로 세상을 떠난다.\n서린의 언니 서윤은 동생의 죽음이 남편 연석 때문이라고 확신하고 복수를 결심한다.\n서윤의 복수는 성공할 수 있을까, 아니면 새로운 감정이 그녀의 계획을 흔들어 놓을까?', cast: '박재하, 박세련, 이제린, 이택현', url: 'https://www.youtube.com/shorts/f2zeQ3o38oc', poster: '' },
+            { genre: '하이틴', mainGenre: '로맨스/일상', title: '드림 온!', synopsis: '안면인식장애를 가진 남자가 얼굴을 모르는 여자의 연애 블로그에 매력을 느끼며 벌어지는 로맨스', cast: '문지후, 김윤하, 은조, 임다훈', url: 'https://www.youtube.com/shorts/PE7zlQCaypQ', poster: '' },
+            { genre: '로맨스', mainGenre: '로맨스/일상', title: '태주 동생 태희', synopsis: '위기와 어려움 속에서도 걸그룹 데뷔라는 꿈을 포기하지 않고 쫓아가는 해리(은조)가\n오랜 슬럼프를 겪으며 지내온 괴짜 프로듀서 문지후(문지후)를 만나 벌어지는 이야기', cast: '유지애, 서준, 장연우, 김채원', url: 'https://www.youtube.com/watch?v=A_40LIm_9SE', poster: '' },
+            { genre: '로맨스 코미디', mainGenre: '로맨스/일상', title: '카페 사장의 5회차 연애 전생기', synopsis: '결혼식 한 달 전, 절친과 예비 신랑의 바람으로 파혼하게 된 강우!\n괴로워하는 그녀 앞에 친구 동생 \'태희\'와 훈남 선배 \'기하\'가 운명처럼 다가온다.\n강우를 사이에 두고 펼쳐지는 두 남자의 아슬아슬한 신경전, 강우의 마음이 향하는 곳은?', cast: '민유준, 송지훈, 안정호 등', url: 'https://www.youtube.com/watch?v=51bOJiGTNtA', poster: '' },
+            { genre: '드라마, 로맨스 코미디', mainGenre: '로맨스/일상', title: '본부장님은 남자를 좋아해', synopsis: '폭스남•재벌남•퇴폐미남•댕댕남•너드남 등 5인5색 남자들중 운명의 주인공을 찾아가는 로맨스 코미디', cast: '김민둥, 김지윤', url: 'https://www.youtube.com/watch?v=tslF2m5KJpM', poster: '' },
+            { genre: '판타지', mainGenre: 'SF/판타지', title: '전학생은 좀비', synopsis: '팀의 운명을 건 양보 없는 유혹 전쟁\n평화롭던 나이스 그룹 영업팀에 어느날 본사의 사신이라 불리는 김태윤 본부장이 발령된다,\n피의 숙청을 앞둔 마케팅 1,2팀은 김태윤 본부장을 꼬시고, 살아남기 위해 최선을 다한다.\', 우연 무역에서 벌어지는 미스터리한 사건들!\"', cast: '최찬이, 양서현, 정이헌, 이휘서', url: 'https://www.youtube.com/watch?v=A6K377oKmeU', poster: '' },
+            { genre: '로맨스, 재회, 운', mainGenre: '로맨스/일상', title: '러브 스트라이크', synopsis: '전국에 퍼진 좀비 바이러스 사태로 정부는 좀비 관리국을 설립,\n마침내 치료제 개발에 성공한다. 치료된 좀비들은 하나둘 사회로 복귀하고 과거 좀비였던\n재현은 소영과 같은 반에 전학을 오게 된다. 재현은 기억을 잃은 채 인간성을 되찾으려 하지만\n친구들의 괴롭힘은 계속되고 소영이 재현을 도와주며 두 사람은 점점 가까워진다.\n계속되는 괴롭힘과 재현의 잃어버린 기억들이 밝혀지며 관계는 더욱 복잡해진다.\n이들은 위기를 이겨내고 사랑을 지킬 수 있을까?', cast: '기현우, 김수인', url: 'https://www.youtube.com/shorts/P9NtL7pmxeI', poster: '' },
+            { genre: '로맨스, 판타지', mainGenre: '로맨스/일상', title: '낮잠공주 스포일러', synopsis: '야구선수인 이정과 연애중인 천시연은 이정이 MLB에 진출하자 두 사람 앞에 행복만이 놓일 것이라 생각하지만\n그의 MBL진출은 그녀에게 불행으로 다가온다.\n8년 후, 한국에 돌아온 MLB스타 이정과 야구 홍보팀 말단 직원 천시연의 재회 그리고 두 번째 로맨스!', cast: '유빈, 김도온, 백예림, 문창준', url: 'https://www.youtube.com/shorts/s1Rl1OEYFAU', poster: '' },
+            { genre: '로맨틱코미디', mainGenre: '로맨스/일상', title: '아이돌의 이중생활', synopsis: '탕비실에서 낮잠을 자면 예지몽을 꾸는 ‘오예지’가 어느 날 자신에게 키스하는 팀장 ‘신재현’을 꿈에서 보게 되면서,\n예지몽을 피하려 하는 좌충우돌 예측 불허 로맨스', cast: '원동우, 박서진, 장석환, 홍근우', url: 'https://www.youtube.com/watch?v=2Dj0_m_WnJw&list=PLLMPjoTveQ5yM6wCVviLNRGglkjnX2MJm&index=1', poster: '' },
+            { genre: '하이틴', mainGenre: 'SF/판타지', title: '청담국제고등학교 - 미술반', synopsis: '고3이던 김도준은 꿈에 그리던 연습생이 된 후, 멤버들을 만나고 데뷔조가 된다.\n3인조 남자 아이돌 그룹 \'1DX1\'은 데뷔하자마자 큰 인기를 얻고...\n연애가 금기시되는 아이돌, 이미지 관리가 중요한 직업이지만 지금 김도준은 철저히 이중생활 중이다.', cast: '이루비, 신지연, 김태희', url: 'https://www.youtube.com/watch?v=A3dW7bJx-4Q', poster: '' },
+            { genre: '로맨스', mainGenre: '로맨스/일상', title: '밸런스 게임을 시작하시겠습니까?', synopsis: '재벌인 척하지만 가난한 \'청아\', 진짜 재벌임을 숨기고 있는 \'레나\'에게 정체를 들킨다.', cast: '설지원, 이석기, 은선우', url: 'https://www.youtube.com/watch?v=N3UlNiozauY&list=PLLMPjoTveQ5w9VI-s6exX1ethJmDI5xiI', poster: '' },
+            { genre: '반전, 로맨스', mainGenre: '액션/스릴러', title: '거짓말로 재벌가의 며느리가 되었습니다', synopsis: '주인공 미소는 김밥 메뉴도 쉽게 선택하지 못할 정도로 우유부단한 사람이다.\n그런 미소의 눈앞에 밸런스 게임 참가 창이 뜨고, 선택을 망설이는 사이 자동 참가 선택이 되어 버리는데...\n미소가 짝사랑하는 연상남 \'팀장\'과 미소를 짝사랑하는 연하남 \'우성\'.\n세 사람의 삼각관계 속에서 갈팡질팡 헤엄치는 미소 앞에 불쑥불쑥 나타나는\n\'밸런스 게임\'이 미소의 일상과 사랑에 파도를 일으킨다.', cast: '마스다 에리나, 오쿠보 긴가', url: 'https://www.youtube.com/watch?v=Z754dSZ8RIM', poster: '' },
+            { genre: '로맨스', mainGenre: '로맨스/일상', title: '좋아할수록 나락위험', synopsis: '그런데, 결혼 정보 앱에서 진짜 재벌가 도련님을 만났다!?\n거짓말로 시작된 판타지 로맨스, 과연 끝까지 들키지 않고 지켜나갈 수 있을까?\n들키는 순간, 재벌 며느리의 꿈은 끝이야💍', cast: '이명준, 조연지', url: 'https://www.youtube.com/watch?v=GMdcRGa5TSU', poster: '' },
+            { genre: '로맨틱코미디', mainGenre: '로맨스/일상', title: '소꿉친구 대표님과 계약 결혼', synopsis: '어릴 적 찍었던 광고가 역주행을 하면서 스타가 된 여자가 수상한 타투를 가진\n남자에게 첫눈에 반해버리며 벌어지는 이야기. 좋아할수록 위험해지는 본격 청춘 로맨스릴러', cast: '하요셉, 김나현, 위창우, 이희옥', url: 'https://www.youtube.com/watch?v=yQ9JfoB0Nvo', poster: '' },
+            { genre: '로맨틱코미디', mainGenre: '로맨스/일상', title: '최애의 사수가 되었다', synopsis: '소꿉친구가 남편이 됐다. "근데 너 왜 자꾸 키스해?" 솔직병에 걸린 여자와\n그녀를 지키려는 남자의 좌충우돌 계약 결혼 생활 이야기', cast: '차선우, 설지원, 기현우', url: 'https://www.youtube.com/watch?v=HAplw9ZSZoU', poster: '' },
+            { genre: '판타지', mainGenre: 'SF/판타지', title: '악녀로 빙의중!', synopsis: '좋아하던 무명 아이돌 우진이 은퇴 후 자신의 부하직원으로 들어온 수정.\n아이돌 시절과는 달리 차가운 우진의 태도에 당황하지만, 이내 사생팬에게 시달려온 우진의 사정을 알게 된다.\n사생팬의 집착은 수정에게까지 닿기 시작하고, 우진은 수정을 옆에서 지켜주기로 마음먹는다.\n한편 수정은 초등학교 동창 기태를 마주치고, 수정의 사정을 알게 된 기태는 자신도 수정을 지키겠다고 나서는데...', cast: '정수빈, 강수빈, 김나현, 최윤정 등', url: 'https://www.youtube.com/watch?v=hn1fyuH5M6Y&list=PLLMPjoTveQ5w8Dw9jlr-ROmsX2j6X7tqn', poster: '' },
+            { genre: '범죄, 느와르, 서스펜스', mainGenre: '액션/스릴러', title: '레이디 엑스', synopsis: '내가 갱생 불가 개쓰레기 정민아? 미완결 작품만 수십 개인 웹소설 작가 민아.\n어느 날, 깨어나 보니 본인이 쓴 소설 캐릭터에 빙의되어버렸다.\n그것도 하필이면 내 이름을 따서 썼던 지독한 악녀 \‘정민아\'라니...!\n불현듯 자신이 빙의한 캐릭터 \‘정민아\'가 최악의 남자와 결혼하는 설정이 떠올랐다!\n이 소설의 엔딩을 지어야 자신이 현실로 돌아갈 수 있음을 깨달은 민아는\n그동안 현실에서 외면했던 소설의 끝맺음을 위해 고군분투하는데...', cast: '유병훈, 김희재', url: 'https://www.youtube.com/shorts/gGDwgKRyLIY', poster: '' },
+            { genre: '미스터리"', mainGenre: '액션/스릴러', title: '타임 러닝', synopsis: '도심 유흥가 어느 모텔, 포박된 한 남자와 도끼를 든 의문의 여인.\n그녀는 낮에는 형사 밤에는 성범죄자들을 타겟으로 살인을 벌이는 이윤이다.\n과거 엄마가 강도에 의해 무참히 살해된 일에 대한 트라우마로 살인을 시작한 이윤은\n경찰이 되어 사법적 처벌이 어려운 성범죄자들에 대한 데이터를 획득, 그들에게 접근해 살인을 이어왔던 것이다.\n강력 3팀의 수사가 이어질수록 사건은 미궁에 빠져 있고 사건을 파고드는\n박정원의 수사망은 점점 이윤이를 향해 좁혀지게 된다.\n어느 날 갑자기 관할지역에 또 다른 살인 사건이 발생하면서 이야기는 예상치 못한 방향으로 치닫게 되는데...', cast: '최종우, 이소이', url: 'https://www.youtube.com/watch?v=PDa_PvWFXKU&t=1s', poster: '' },
+            { genre: '판타지', mainGenre: 'SF/판타지', title: '다~ 들려요, 팀장님', synopsis: '\“지금의 난 과거로 돌아와있다.\” 엘리트 러너 진영은 불의의 사고로 마라톤을 포기했다.\n3년 후, 여동생 소영의 교통사고로 인해 죄책감에 시달리는데 어느 날부터 시간이 점점 뒤로 흐르기 시작한다.', cast: '강인수, 한예지, 손민호, 이은빈', url: 'https://www.youtube.com/watch?v=wew97aYJShg', poster: '' },
+            { genre: '청춘, 로맨스, 병맛', mainGenre: '일상/드라마', title: '동생의 남편과 결혼했습니다', synopsis: '시골 소녀 은채는 인테리어 플랫폼 홈잇에 신입사원으로 합격하며 꿈에 그리던 서울 생활을 시작한다.\n 하지만, 기껏 구한 집이 부실 공사에 방음 하나 되지 않는 집인 것도 모자라 매일 밤 노래를 부르는\n지독한 음치의 옆집 남자까지 있는 최악의 매물이라니..!\n게다가 회사에서는 실수 연발로 권지혁 팀장님께 제대로 찍히면서 한강 물에 뛰어들지 고민하던 어느 날,\n은채는 완벽주의 팀장님이 옆집의 음치 남자라는 것을 알게 된다.', cast: '신새벽, 이차희, 황민환, 김문기, 김혜수', url: 'https://www.youtube.com/shorts/6hq3eoCTzQU', poster: '' },
+            { genre: '복수, 스릴러', mainGenre: '액션/스릴러', title: '여보스 남고 가다', synopsis: '여동생의 남편과 그의 내연녀에게 살해당한 여자가 회귀한 뒤,\n복수를 위해 여동생의 남편과 결혼하며 벌어지는 이야기.', cast: '하예은, 박윤호, 박태린, 정호균', url: 'https://www.youtube.com/watch?v=NUyxpoldd5I', poster: '' }
+        ];
 
-            const navLinks = document.querySelectorAll('.nav-link');
-            const sections = document.querySelectorAll('main section');
+        function getYouTubeVideoId(url) {
+            if (!url) return null;
+            let videoId = null;
+            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:shorts\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(regex);
+            if (match) {
+                videoId = match[1];
+            }
+            return videoId;
+        }
 
-            window.addEventListener('scroll', () => {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    if (pageYOffset >= sectionTop - 80) {
-                        current = section.getAttribute('id');
-                    }
-                });
+        dramas.forEach(drama => {
+            const videoId = getYouTubeVideoId(drama.url);
+            if (videoId) {
+                drama.poster = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+                drama.url = `https://www.youtube.com/watch?v=${videoId}`;
+            } else {
+                const titleText = encodeURIComponent(drama.title.replace(/\s/g, '\\n'));
+                drama.poster = `https://placehold.co/400x600/6b7280/ffffff?text=${titleText}`;
+            }
+        });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active-link');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active-link');
-                    }
-                });
-            });
-
-            const characterTabs = document.querySelectorAll('.tab');
-            characterTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const char = tab.dataset.char;
-                    const tabNum = tab.dataset.tab;
-
-                    document.querySelectorAll(`.tab[data-char="${char}"]`).forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-
-                    document.querySelectorAll(`.tab-content[data-char="${char}"]`).forEach(content => content.classList.remove('active'));
-                    document.querySelector(`.tab-content[data-char="${char}"][data-content="${tabNum}"]`).classList.add('active');
-                });
-            });
-            
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            const storyDisplay = document.getElementById('story-display');
-            
-            timelineItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const storyText = item.dataset.story;
-                    storyDisplay.innerHTML = `<p>${storyText}</p>`;
-                });
-            });
-
-            const ctx = document.getElementById('personalityChart').getContext('2d');
-            const personalityChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['까칠함', '순정', '완벽주의', '내향성', '긍정 에너지', '직진', '외향성', '다정함'],
-                    datasets: [{
-                        label: '권도윤',
-                        data: [8, 9, 8, 7, 2, 3, 3, 4],
-                        backgroundColor: 'rgba(131, 39, 41, 0.2)',
-                        borderColor: 'rgba(131, 39, 41, 1)',
-                        borderWidth: 2,
-                        pointBackgroundColor: 'rgba(131, 39, 41, 1)'
-                    }, {
-                        label: '정해원',
-                        data: [2, 8, 4, 3, 9, 9, 8, 8],
-                        backgroundColor: 'rgba(217, 119, 6, 0.2)',
-                        borderColor: 'rgba(217, 119, 6, 1)',
-                        borderWidth: 2,
-                        pointBackgroundColor: 'rgba(217, 119, 6, 1)'
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            },
-                            pointLabels: {
-                                font: {
-                                    size: 12,
-                                    family: "'Noto Sans KR', sans-serif"
-                                },
-                                color: '#333'
-                            },
-                            ticks: {
-                                beginAtZero: true,
-                                max: 10,
-                                stepSize: 2,
-                                backdropColor: 'rgba(253, 251, 248, 0.7)'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                font: {
-                                    size: 14,
-                                    family: "'Noto Sans KR', sans-serif"
-                                }
-                            }
-                        },
-                        tooltip: {
-                             bodyFont: {
-                                family: "'Noto Sans KR', sans-serif"
-                            },
-                             titleFont: {
-                                family: "'Noto Sans KR', sans-serif"
+        // --- Chart.js ---
+        new Chart(document.getElementById('marketGrowthChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['2022', '2023', '2024', '2025 (전망)', '2026 (전망)'],
+                datasets: [{
+                    label: '시장 규모 (백만 $)',
+                    data: [25, 55, 120, 250, 410],
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                    pointRadius: 5,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, ticks: { callback: (value) => '$' + value + 'M' } } },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                let label = context.dataset.label || '';
+                                if (label) label += ': ';
+                                if (context.parsed.y !== null) label += '$' + context.parsed.y + 'M';
+                                return label;
                             }
                         }
                     }
                 }
+            }
+        });
+
+        // --- Drama Gallery & Filter ---
+        const gallery = document.getElementById('drama-gallery');
+        const genreFiltersContainer = document.getElementById('genre-filters');
+        const galleryControls = document.getElementById('gallery-controls');
+        const modal = document.getElementById('drama-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        let currentFilter = 'all';
+        let isExpanded = false;
+        const initialDisplayCount = 8;
+
+        const mainGenres = ['로맨스/일상', '액션/스릴러', 'SF/판타지', '코미디', '일상/드라마'];
+        mainGenres.forEach(genre => {
+            const btn = document.createElement('button');
+            btn.className = 'genre-filter-btn';
+            btn.dataset.genre = genre;
+            btn.textContent = genre;
+            genreFiltersContainer.appendChild(btn);
+        });
+        
+        const filterBtns = document.querySelectorAll('.genre-filter-btn');
+
+        function getFilteredDramas() {
+            if (currentFilter === 'all') return dramas;
+            return dramas.filter(d => d.mainGenre === currentFilter);
+        }
+
+        function displayDramas() {
+            const filtered = getFilteredDramas();
+            gallery.innerHTML = '';
+            const dramasToDisplay = isExpanded ? filtered : filtered.slice(0, initialDisplayCount);
+
+            dramasToDisplay.forEach(drama => {
+                const dramaEl = document.createElement('div');
+                dramaEl.className = 'group cursor-pointer';
+                dramaEl.innerHTML = `
+                    <div class="aspect-[2/3] w-full bg-gray-200 rounded-lg overflow-hidden relative">
+                        <img src="${drama.poster}" alt="${drama.title}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/400x600/6b7280/ffffff?text=Image\\nNot\\nFound';">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
+                           <p class="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">상세보기</p>
+                        </div>
+                    </div>
+                    <h5 class="mt-2 text-md font-bold text-gray-900 truncate">${drama.title}</h5>
+                    <p class="text-sm text-gray-500">${drama.genre}</p>
+                `;
+                dramaEl.addEventListener('click', () => openModal(drama));
+                gallery.appendChild(dramaEl);
+            });
+
+            updateGalleryControls(filtered.length);
+        }
+
+        function updateGalleryControls(totalCount) {
+            galleryControls.innerHTML = '';
+            if (totalCount > initialDisplayCount) {
+                const button = document.createElement('button');
+                button.textContent = isExpanded ? '접기' : '더보기';
+                button.className = 'bg-sky-700 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-sky-800 transition';
+                button.addEventListener('click', () => {
+                    isExpanded = !isExpanded;
+                    displayDramas();
+                });
+                galleryControls.appendChild(button);
+            }
+        }
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.genre;
+                isExpanded = false;
+                displayDramas();
             });
         });
+
+        function openModal(drama) {
+            const watchButtonHtml = drama.url ? `
+                <div class="mt-6">
+                    <a href="${drama.url}" target="_blank" rel="noopener noreferrer" class="inline-block w-full text-center bg-sky-700 text-white font-bold py-3 px-6 rounded-lg text-base hover:bg-sky-800 transition">
+                        작품 보러가기 
+                    </a>
+                </div>` : '';
+
+            modalContent.innerHTML = `
+                <button id="close-modal" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 z-10">&times;</button>
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/3 flex-shrink-0">
+                        <img src="${drama.poster}" alt="${drama.title}" class="w-full h-auto object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none" onerror="this.onerror=null;this.src='https://placehold.co/400x600/6b7280/ffffff?text=Image\\nNot\\nFound';">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                         <h3 class="text-2xl font-bold text-gray-900">${drama.title}</h3>
+                         <p class="mt-1 text-sm font-medium text-sky-600">${drama.genre}</p>
+                         <p class="mt-4 text-gray-600">${drama.synopsis}</p>
+                         <p class="mt-4 text-sm"><strong class="font-semibold text-gray-800">주요 출연진:</strong> ${drama.cast}</p>
+                         <div class="flex-grow"></div>
+                         ${watchButtonHtml}
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+            document.getElementById('close-modal').addEventListener('click', closeModal);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.add('scale-95');
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        displayDramas();
+        
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .genre-filter-btn {
+                padding: 0.5rem 1rem;
+                border-radius: 9999px;
+                font-weight: 500;
+                font-size: 0.875rem;
+                color: #4b5563;
+                background-color: #e5e7eb;
+                transition: all 0.2s;
+            }
+            .genre-filter-btn:hover {
+                background-color: #d1d5db;
+            }
+            .genre-filter-btn.active {
+                color: #ffffff;
+                background-color: #0369a1; /* sky-800 */
+                font-weight: 700;
+            }
+            #close-modal {
+                font-size: 2rem;
+                line-height: 1;
+                border: none;
+                background: none;
+                cursor: pointer;
+            }
+        `;
+        document.head.appendChild(style);
+    });
     </script>
 </body>
 </html>
+
