@@ -1,154 +1,663 @@
 <!DOCTYPE html>
 <html lang="ko" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="pageTitle">K-숏폼 드라마 베트남 파트너십 제안</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-  <style>
-    body { font-family:'Noto Sans KR',sans-serif; background:#f8f7f4; }
-    .chart-container { position:relative; width:100%; max-width:800px; margin:auto; height:300px; }
-    @media(min-width:768px){ .chart-container{height:400px;} }
-    .genre-filter-btn { padding:.5rem 1rem; border-radius:9999px; font-weight:500; font-size:.875rem; color:#4b5563; background:#e5e7eb; transition:.2s; }
-    .genre-filter-btn:hover{background:#d1d5db;}
-    .genre-filter-btn.active{color:#fff; background:#0369a1;}
-    #close-modal{font-size:2rem; line-height:1; border:none; background:none; cursor:pointer;}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-숏폼 드라마 베트남 파트너십 제안</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral Harmony -->
+    <!-- Application Structure Plan: The application is designed as a top-to-bottom narrative funnel. It starts with a compelling headline (Hero), presents the market opportunity with interactive stats and a chart (The Opportunity), allows deep exploration of the core offering via a filterable and collapsible content gallery (Our Library), outlines the mutual benefits (Partnership), and ends with a clear call to action (Contact). This structure is chosen over a direct PPT-to-web conversion to guide the potential partner through a journey of discovery and persuasion, making the value proposition tangible and engaging. -->
+    <!-- Visualization & Content Choices: 
+    - Market Growth (Report Info) -> Goal: Inform/Impress -> Viz: Chart.js Line Chart -> Interaction: Animated load, tooltips -> Justification: Visually demonstrates the lucrative market trend, more impactful than static numbers. Library: Chart.js.
+    - Core Competencies (Report Info) -> Goal: Build Confidence -> Viz: Icon-based info cards -> Interaction: Subtle hover effects -> Justification: Enhances readability and visual appeal over simple text. Library: Tailwind CSS.
+    - Drama Lineup (Report Info) -> Goal: Showcase Content/Engage -> Viz: Interactive Poster Gallery with simplified filters and a show/hide toggle -> Interaction: Main genre filtering, modal pop-up for details, gallery expand/collapse -> Justification: Improves usability by reducing filter clutter and managing long content lists effectively. Library: Vanilla JS, Tailwind CSS.
+    - Partnership Model (Report Info) -> Goal: Clarify Benefits -> Viz: Single focused column with icons -> Interaction: None -> Justification: Clear, scannable list of partner benefits, removing distractions. Library: Tailwind CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f7f4;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+    </style>
 </head>
 <body class="text-gray-800">
 
-  <!-- 언어 선택 -->
-  <div class="flex justify-end p-4 space-x-2 bg-white/80 sticky top-0 z-50">
-    <button onclick="setLanguage('ko')" class="px-3 py-1 border rounded">🇰🇷 한국어</button>
-    <button onclick="setLanguage('en')" class="px-3 py-1 border rounded">🇺🇸 English</button>
-    <button onclick="setLanguage('vi')" class="px-3 py-1 border rounded">🇻🇳 Tiếng Việt</button>
-  </div>
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-sky-800">K-Shortform Proposal</h1>
+                </div>
+                <div class="hidden md:flex items-center">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#opportunity" class="text-gray-600 hover:text-sky-700 px-3 py-2 rounded-md text-sm font-medium" data-translate-key="nav_market">시장 잠재력</a>
+                        <a href="#library" class="text-gray-600 hover:text-sky-700 px-3 py-2 rounded-md text-sm font-medium" data-translate-key="nav_library">콘텐츠 라이브러리</a>
+                        <a href="#partnership" class="text-gray-600 hover:text-sky-700 px-3 py-2 rounded-md text-sm font-medium" data-translate-key="nav_partnership">파트너십 모델</a>
+                        <a href="#contact" class="bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-sky-800" data-translate-key="nav_contact">문의하기</a>
+                    </div>
+                    <!-- Language Dropdown -->
+                    <div id="lang-switcher" class="relative ml-6 pl-6 border-l border-gray-300">
+                        <button id="lang-switcher-button" type="button" class="flex items-center justify-between w-32 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">
+                            <span id="current-lang-text">한국어</span>
+                            <span class="ml-2">▼</span>
+                        </button>
+                        <div id="lang-switcher-menu" class="origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden">
+                            <div class="py-1">
+                                <a href="#" class="lang-option text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" data-lang="ko">한국어</a>
+                                <a href="#" class="lang-option text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" data-lang="en">English</a>
+                                <a href="#" class="lang-option text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" data-lang="vi">Tiếng Việt</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-  <!-- Header & Nav -->
-  <header class="bg-white/80 backdrop-blur-lg sticky top-[48px] z-40 shadow-sm">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <h1 class="text-xl font-bold text-sky-800" data-i18n="brand">K‑Shortform Proposal</h1>
-        <div class="hidden md:block">
-          <div class="ml-10 flex items-baseline space-x-4">
-            <a href="#opportunity" class="nav-link" data-i18n="navOpportunity">시장 잠재력</a>
-            <a href="#library" class="nav-link" data-i18n="navLibrary">콘텐츠 라이브러리</a>
-            <a href="#partnership" class="nav-link" data-i18n="navPartnership">파트너십 모델</a>
-            <a href="#contact" class="cta-button" data-i18n="navContact">문의하기</a>
-          </div>
+    <main>
+        <!-- Section 1: Hero -->
+        <section class="relative h-[60vh] md:h-[80vh] flex items-center justify-center text-center bg-gray-200 overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                 <img src="https://placehold.co/1920x1080/1e293b/f8f7f4?text=+" alt="Background Image" class="w-full h-full object-cover opacity-30">
+            </div>
+            <div class="relative z-10 p-4">
+                <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                    <span class="block" data-translate-key="hero_title1">1,000편 이상의 K-숏폼 드라마로</span>
+                    <span class="block text-sky-700 mt-2" data-translate-key="hero_title2">베트남 시장을 선도합니다</span>
+                </h2>
+                <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-gray-700" data-translate-key="hero_subtitle">
+                    압도적인 콘텐츠 라이브러리를 통해 베트남 숏폼 시장의 판도를 바꿀 최고의 파트너십을 제안합니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 2: The Opportunity -->
+        <section id="opportunity" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl" data-translate-key="opportunity_title">기회의 땅, 베트남 시장의 잠재력</h3>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600" data-translate-key="opportunity_desc">모바일 중심의 젊은 세대가 이끄는 베트남의 숏폼 콘텐츠 시장은 폭발적으로 성장하고 있으며, K-콘텐츠에 대한 높은 선호도는 성공을 위한 최적의 환경을 제공합니다.</p>
+                </div>
+                <div class="mt-16">
+                    <div class="chart-container">
+                        <canvas id="marketGrowthChart"></canvas>
+                    </div>
+                    <p class="text-center mt-2 text-sm text-gray-500" data-translate-key="opportunity_chart_caption">베트남 숏폼 드라마 시장 규모 전망 (단위: 백만 달러)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Our Unmatched Library -->
+        <section id="library" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl" data-translate-key="library_title">1,000+ 독보적인 K-드라마 라이브러리</h3>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600" data-translate-key="library_desc">로맨스부터 스릴러까지, 모든 장르를 아우르는 방대한 라이브러리를 통해 베트남 시청자들의 다양한 니즈를 완벽하게 충족시킬 수 있습니다.</p>
+                    <p class="mt-2 text-sm text-gray-500" data-translate-key="library_note">*일부 리스트 이며 더 자세한 내용은 추후 공개 하겠습니다</p>
+                </div>
+
+                <div class="mt-12">
+                    <div id="genre-filters" class="flex justify-center flex-wrap gap-2 md:gap-4 mb-8">
+                        <button class="genre-filter-btn active" data-genre="all" data-translate-key="filter_all">전체보기</button>
+                        <!-- Genre buttons will be injected here -->
+                    </div>
+
+                    <div id="drama-gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                        <!-- Drama posters will be injected here by JavaScript -->
+                    </div>
+                    <div id="gallery-controls" class="text-center mt-8">
+                        <!-- "Show More" button will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Partnership -->
+        <section id="partnership" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl" data-translate-key="partnership_title">성공을 위한 파트너십</h3>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600" data-translate-key="partnership_desc">귀사의 성공적인 비즈니스를 위해 다음과 같은 이점을 제공합니다.</p>
+                </div>
+                <div class="mt-16 max-w-2xl mx-auto">
+                    <div class="p-8 border border-gray-200 rounded-lg">
+                        <h4 class="text-2xl font-semibold text-sky-800 text-center" data-translate-key="benefit_title">파트너사 Benefit</h4>
+                        <ul class="mt-6 space-y-4 text-gray-600">
+                            <li class="flex items-start"><span class="flex-shrink-0 text-sky-700 mr-2">✓</span><span data-translate-key="benefit1">1,000편 이상의 방대하고 안정적인 작품 공급</span></li>
+                            <li class="flex items-start"><span class="flex-shrink-0 text-sky-700 mr-2">✓</span><span data-translate-key="benefit2">K-콘텐츠 독점/선공개를 통한 플랫폼 경쟁력 극대화</span></li>
+                            <li class="flex items-start"><span class="flex-shrink-0 text-sky-700 mr-2">✓</span><span data-translate-key="benefit3">신규 유저 유입 및 기존 유저 Lock-in 효과</span></li>
+                            <li class="flex items-start"><span class="flex-shrink-0 text-sky-700 mr-2">✓</span><span data-translate-key="benefit4">충성도 높은 시청자 팬덤 확보 및 수익 모델 다각화</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Contact -->
+        <section id="contact" class="py-20 bg-sky-800 text-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                 <h3 class="text-3xl font-bold tracking-tight sm:text-4xl" data-translate-key="contact_title">지금 바로 논의를 시작하세요</h3>
+                 <p class="mt-4 text-lg text-sky-100" data-translate-key="contact_desc">함께 성공을 만들어갈 최적의 파트너를 기다립니다. <br>귀사와의 긍정적인 파트너십을 기대합니다.</p>
+                 <div class="mt-8">
+                     <a href="mailto:kosd3@scompanys.com" class="inline-block bg-white text-sky-800 font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-100 transition" data-translate-key="contact_button">
+                         이메일 문의하기
+                     </a>
+                 </div>
+                 <div class="mt-6 text-sky-200 text-sm">
+                     <p><span data-translate-key="contact_person_label">담당자</span>: <span data-translate-key="contact_person_name">고성덕 이사</span> | <span data-translate-key="contact_phone_label">연락처</span>: +82 10 6249 8222</p>
+                 </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 CompanyS Inc. All Rights Reserved.</p>
         </div>
-      </div>
-    </nav>
-  </header>
+    </footer>
 
-  <main>
-    <!-- Hero -->
-    <section class="relative h-[60vh] md:h-[80vh] flex items-center justify-center bg-gray-200 text-center overflow-hidden">
-      <div class="absolute inset-0 z-0"><img src="https://placehold.co/1920x1080/1e293b/f8f7f4?text=+" class="w-full h-full object-cover opacity-30"></div>
-      <div class="relative z-10 p-4">
-        <h2 class="text-4xl md:text-6xl font-extrabold leading-tight text-gray-900">
-          <span data-i18n="heroLine1"></span><br>
-          <span data-i18n="heroLine2" class="text-sky-700 mt-2 block"></span>
-        </h2>
-        <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-gray-700" data-i18n="heroSubtitle"></p>
-      </div>
-    </section>
-
-    <!-- Opportunity -->
-    <section id="opportunity" class="py-20 bg-white">
-      <div class="max-w-7xl mx-auto px-4 text-center">
-        <h3 class="text-3xl font-bold sm:text-4xl text-gray-900" data-i18n="oppTitle"></h3>
-        <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600" data-i18n="oppSubtitle"></p>
-        <div class="chart-container mt-16">
-          <canvas id="marketGrowthChart"></canvas>
-          <p class="text-center mt-2 text-sm text-gray-500" data-i18n="chartCaption"></p>
+    <!-- Modal -->
+    <div id="drama-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-70 modal-backdrop opacity-0 pointer-events-none">
+        <div id="modal-content" class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform scale-95 relative">
+            <!-- Modal content will be injected here -->
         </div>
-      </div>
-    </section>
-
-    <!-- Library -->
-    <section id="library" class="py-20">
-      <div class="max-w-7xl mx-auto px-4 text-center">
-        <h3 class="text-3xl font-bold sm:text-4xl text-gray-900" data-i18n="libTitle"></h3>
-        <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600" data-i18n="libSubtitle"></p>
-        <p class="mt-2 text-sm text-gray-500 italic" data-i18n="libNote"></p>
-        <div class="mt-12">
-          <div id="genre-filters" class="flex justify-center flex-wrap gap-2 mb-8"></div>
-          <div id="drama-gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"></div>
-          <div id="gallery-controls" class="text-center mt-8"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Partnership -->
-    <section id="partnership" class="py-20 bg-white">
-      <div class="max-w-7xl mx-auto px-4 text-center">
-        <h3 class="text-3xl font-bold sm:text-4xl text-gray-900" data-i18n="partTitle"></h3>
-        <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600" data-i18n="partSubtitle"></p>
-        <div class="mt-16 max-w-2xl mx-auto border p-8">
-          <h4 class="text-2xl font-semibold text-sky-800" data-i18n="partBenefitTitle"></h4>
-          <ul class="mt-6 space-y-4 text-gray-600 text-left list-none pl-0">
-            <li>✓ <span data-i18n="benefit1"></span></li>
-            <li>✓ <span data-i18n="benefit2"></span></li>
-            <li>✓ <span data-i18n="benefit3"></span></li>
-            <li>✓ <span data-i18n="benefit4"></span></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="py-20 bg-sky-800 text-white text-center">
-      <div class="max-w-4xl mx-auto px-4">
-        <h3 class="text-3xl sm:text-4xl font-bold" data-i18n="contactTitle"></h3>
-        <p class="mt-4 text-lg text-sky-100" data-i18n="contactSubtitle"></p>
-        <div class="mt-8">
-          <a href="mailto:kosd3@scompanys.com" class="inline-block bg-white text-sky-800 font-bold py-3 px-8 rounded-lg" data-i18n="contactButton"></a>
-        </div>
-        <div class="mt-6 text-sky-200 text-sm" data-i18n="contactInfo"></div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white">
-    <div class="max-w-7xl mx-auto py-6 px-4 text-center text-sm">
-      <p data-i18n="footerText"></p>
     </div>
-  </footer>
 
-  <!-- Modal -->
-  <div id="drama-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-70 opacity-0 pointer-events-none">
-    <div id="modal-content" class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform scale-95"></div>
-  </div>
 
-  <script>
-    // 다국어 텍스트
-    const translations = {
-      ko: {/* 한국어 원문 데이터 */},
-      en: {/* 영어 번역 데이터 */},
-      vi: {/* 베트남어 번역 데이터 */}
-    };
-
-    function setLanguage(lang) {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) el.innerText = translations[lang][key];
-      });
-      document.title = translations[lang].pageTitle;
-    }
-
+    <script>
     document.addEventListener('DOMContentLoaded', () => {
-      setLanguage('ko');
 
-      // Chart.js 초기화
-      new Chart(...); // 차트 설정 그대로
+        // --- Data & Translations ---
+        const dramas = [
+            {
+                title: { ko: '대표님의 파트너', en: 'The CEO\'s Partner', vi: 'Đối Tác Của Giám Đốc' },
+                genre: { ko: '로맨틱 코미디', en: 'Rom-Com', vi: 'Hài lãng mạn' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '인생 처음으로 낯선 남자(현우)와 하룻 밤을 보내게 된 수아. \n두 사람은 대표와 비서 관계로 조우하고\n비서와 대표 사이에 흐르는 묘한 기류를 표현한 로맨틱 코미디 드라마', en: 'Soo-ah spends a night with a stranger for the first time. They reunite as a CEO and his secretary, leading to a rom-com about the subtle tension between them.', vi: 'Soo-ah qua đêm với một người đàn ông lạ lần đầu tiên trong đời. Họ gặp lại nhau với tư cách là giám đốc và thư ký, một bộ phim hài lãng mạn thể hiện dòng chảy kỳ lạ giữa hai người.' },
+                cast: { ko: '정시현, 이예린, 김리한, 이서빈', en: 'Jeong Si-hyeon, Lee Ye-rin, Kim Ri-han, Lee Seo-bin', vi: 'Jeong Si-hyeon, Lee Ye-rin, Kim Ri-han, Lee Seo-bin' },
+                url: 'https://www.youtube.com/shorts/ZRV5z4_VV00'
+            },
+            {
+                title: { ko: '나인투식스', en: 'Nine to Six', vi: '9 đến 6' },
+                genre: { ko: 'SF', en: 'SF', vi: 'Khoa học viễn tưởng' },
+                mainGenre: { ko: 'SF/판타지', en: 'SF/Fantasy', vi: 'Viễn tưởng/Kỳ ảo' },
+                synopsis: { ko: '\'퇴근도 못하고 죽는 타임루프에 갇혔다?\'\n어느 평범한 직장인이 회사 안에서 똑같은 하루가 끊임없이 반복되는\n타임루프에 갇혀버려 필사의 탈출을 하는 SF드라마', en: "'Trapped in a time loop where you can't even leave work?' An SF drama about an ordinary office worker's desperate escape from a time loop where the same day repeats endlessly.", vi: "'Bị mắc kẹt trong một vòng lặp thời gian không thể tan làm?' Một bộ phim khoa học viễn tưởng về cuộc đào thoát tuyệt vọng của một nhân viên văn phòng bình thường bị mắc kẹt trong vòng lặp thời gian, nơi một ngày lặp đi lặp lại không ngừng." },
+                cast: { ko: '유수빈, 백승훈', en: 'Yoo Su-bin, Baek Seung-hoon', vi: 'Yoo Su-bin, Baek Seung-hoon' },
+                url: 'https://www.youtube.com/shorts/171fnkVhGks'
+            },
+            {
+                title: { ko: '대막리 살인사건', en: 'The Daemak-ri Murder Case', vi: 'Vụ án giết người ở Daemak-ri' },
+                genre: { ko: '스릴러, 드라마', en: 'Thriller, Drama', vi: 'Kinh dị, Chính kịch' },
+                mainGenre: { ko: '액션/스릴러', en: 'Action/Thriller', vi: 'Hành động/Kinh dị' },
+                synopsis: { ko: '친구들과의 별장 여행, 의문의 살인사건, 그리고 내가 용의자로 지목됐다.', en: 'A trip to a villa with friends, a mysterious murder, and I become the prime suspect.', vi: 'Một chuyến đi đến biệt thự cùng bạn bè, một vụ án giết người bí ẩn, và tôi bị chỉ định là nghi phạm.' },
+                cast: { ko: '이창인, 강예리, 정이헌 등', en: 'Lee Chang-in, Kang Ye-ri, Jeong Yi-heon, etc.', vi: 'Lee Chang-in, Kang Ye-ri, Jeong Yi-heon, etc.' },
+                url: 'https://www.youtube.com/watch?v=bj2hkZ1OrfQ'
+            },
+            {
+                title: { ko: '퍼펙트 퍼펫', en: 'Perfect Puppet', vi: 'Con Rối Hoàn Hảo' },
+                genre: { ko: '스릴러, 드라마', en: 'Thriller, Drama', vi: 'Kinh dị, Chính kịch' },
+                mainGenre: { ko: '액션/스릴러', en: 'Action/Thriller', vi: 'Hành động/Kinh dị' },
+                synopsis: { ko: '천재적인 재능으로 장래가 유망했던 화이트해커 주인공이 사람들을\n해킹하고 조종하여 꼭두각시로 만들고 연쇄살인을 저지르는 이야기', en: 'A story about a promising white-hat hacker with genius talent who hacks and manipulates people, turning them into puppets and committing serial murders.', vi: 'Câu chuyện về một hacker mũ trắng tài năng, triển vọng, người đã hack và điều khiển mọi người, biến họ thành con rối và thực hiện các vụ giết người hàng loạt.' },
+                cast: { ko: '이형규, 임솔지, 김현섭, 권구윤', en: 'Lee Hyeong-gyu, Im Sol-ji, Kim Hyeon-seop, Kwon Gu-yun', vi: 'Lee Hyeong-gyu, Im Sol-ji, Kim Hyeon-seop, Kwon Gu-yun' },
+                url: 'https://www.youtube.com/watch?v=Gr6_plBu_10'
+            },
+            {
+                title: { ko: '러브 아포칼립스', en: 'Love Apocalypse', vi: 'Tận Thế Tình Yêu' },
+                genre: { ko: 'SF, 멜로, 로맨스', en: 'SF, Melodrama, Romance', vi: 'KHVT, Lãng mạn' },
+                mainGenre: { ko: 'SF/판타지', en: 'SF/Fantasy', vi: 'Viễn tưởng/Kỳ ảo' },
+                synopsis: { ko: '운석 러브가 떨어져 지구가 멸망하기 일주일전,\n회사에 출근한 주인공 희수와 그의 직장 상사 우진의 퀴어 로맨틱 코미디', en: 'A week before the world ends due to the "Love" meteor, a queer romantic comedy unfolds between protagonist Hee-soo and his boss Woo-jin at work.', vi: 'Một tuần trước khi thế giới kết thúc vì thiên thạch "Tình yêu" rơi xuống, một bộ phim hài lãng mạn đồng tính diễn ra giữa nhân vật chính Hee-soo và sếp của anh ấy là Woo-jin tại nơi làm việc.' },
+                cast: { ko: '이명준, 김성혁', en: 'Lee Myeong-jun, Kim Seong-hyeok', vi: 'Lee Myeong-jun, Kim Seong-hyeok' },
+                url: 'https://www.youtube.com/shorts/8es3EpK9M4Q'
+            },
+            {
+                title: { ko: '매치플레이', en: 'Match Play', vi: 'Đấu Đối Kháng' },
+                genre: { ko: 'BL, 혐관, 액션', en: 'BL, Enemies-to-Lovers, Action', vi: 'BL, Hành động' },
+                mainGenre: { ko: '액션/스릴러', en: 'Action/Thriller', vi: 'Hành động/Kinh dị' },
+                synopsis: { ko: '묵묵하게 원칙을 지키는 스턴트맨 \'재연\', 액션영화에 캐스팅된 아이돌 \'도하\'.\n앙숙이 된 두 사람 사이에 일어나는 예상치 못한 콘텐츠', en: 'Jae-yeon, a stuntman who silently sticks to his principles, and Do-ha, an idol cast in an action film. An unexpected story unfolds between these two rivals.', vi: 'Jae-yeon, một diễn viên đóng thế luôn âm thầm tuân thủ các nguyên tắc, và Do-ha, một thần tượng được chọn đóng phim hành động. Một câu chuyện bất ngờ mở ra giữa hai đối thủ này.' },
+                cast: { ko: '오진석, 이태형', en: 'Oh Jin-seok, Lee Tae-hyeong', vi: 'Oh Jin-seok, Lee Tae-hyeong' },
+                url: 'https://www.youtube.com/shorts/YPPkwmlzfGA'
+            },
+            {
+                title: { ko: '진상컬렉션', en: 'The Annoying Customer Collection', vi: 'Bộ Sưu Tập Khách Hàng Khó Chịu' },
+                genre: { ko: '코미디, 드라마, 로맨스', en: 'Comedy, Drama, Romance', vi: 'Hài, Chính kịch, Lãng mạn' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '소꼽친구인 민수와 소정은 오랜만에 만나 서로의 진상 손님에 대해 이야기하기 시작한다', en: 'Childhood friends Min-su and So-jeong meet after a long time and start talking about their most annoying customers.', vi: 'Đôi bạn thời thơ ấu Min-su và So-jeong gặp lại nhau sau một thời gian dài và bắt đầu kể về những khách hàng khó chịu nhất của họ.' },
+                cast: { ko: '신윤제, 이휘서', en: 'Shin Yun-je, Lee Hwi-seo', vi: 'Shin Yun-je, Lee Hwi-seo' },
+                url: 'https://www.youtube.com/watch?v=qjXNIwnqPtw'
+            },
+            {
+                title: { ko: '삐뚤빼뚤', en: 'Crooked', vi: 'Nghiêng Ngả' },
+                genre: { ko: '코미디, 드라마, 로맨스', en: 'Comedy, Drama, Romance', vi: 'Hài, Chính kịch, Lãng mạn' },
+                mainGenre: { ko: '코미디', en: 'Comedy', vi: 'Hài' },
+                synopsis: { ko: '무당이라는 직업을 말하기 싫었어요...\nMZ무당의 진짜 이야기', en: 'I didn\'t want to say my job was a shaman... The real story of an MZ shaman.', vi: 'Tôi không muốn nói nghề của mình là pháp sư... Câu chuyện có thật của một pháp sư thế hệ MZ.' },
+                cast: { ko: '김지한,박주희,신소현,김단아,김서진,김도건', en: 'Kim Ji-han, Park Ju-hee, Shin So-hyeon, Kim Dan-a, Kim Seo-jin, Kim Do-geon', vi: 'Kim Ji-han, Park Ju-hee, Shin So-hyeon, Kim Dan-a, Kim Seo-jin, Kim Do-geon' },
+                url: 'https://www.youtube.com/watch?v=74bd82mcH1Q'
+            },
+            {
+                title: { ko: 'To.엑스', en: 'To.X', vi: 'Gửi X' },
+                genre: { ko: '로맨스, 드라마, 스릴', en: 'Romance, Drama, Thriller', vi: 'Lãng mạn, Chính kịch, Kinh dị' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '출처를 알 수 없는 추문, 믿었던 사람들의 의심,\n나를 외면한 애인과 절친의 바람, 무너지는 일상.', en: 'A scandal from an unknown source, suspicion from those I trusted, my lover ignoring me and my best friend\'s affair, a collapsing daily life.', vi: 'Một vụ bê bối không rõ nguồn gốc, sự nghi ngờ từ những người tôi tin tưởng, người yêu phớt lờ tôi và bạn thân ngoại tình, cuộc sống hàng ngày sụp đổ.' },
+                cast: { ko: '김이서, 이나, 김문기, 김도은', en: 'Kim I-seo, Lee Na, Kim Mun-gi, Kim Do-eun', vi: 'Kim I-seo, Lee Na, Kim Mun-gi, Kim Do-eun' },
+                url: 'https://www.youtube.com/watch?v=4krxNl6Nbp8'
+            },
+            {
+                title: { ko: '해야만 하는 쉐어하우스', en: 'The Must-Do Share House', vi: 'Ngôi Nhà Chung Bắt Buộc' },
+                genre: { ko: '로맨틱코미디', en: 'Rom-Com', vi: 'Hài lãng mạn' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '정체를 숨긴 채 다가 온 조력자와 복수를 시작합니다.\n나를 배신한 모든 X들에게, 〈To.엑스〉', en: 'Revenge begins with a helper who approaches while hiding their identity. To all the X\'s who betrayed me, <To.X>.', vi: 'Bắt đầu cuộc trả thù với một người trợ giúp che giấu thân phận. Gửi đến tất cả những X đã phản bội tôi, <Gửi X>.' },
+                cast: { ko: '박시연, 지호근, 전준호, 차현승, 장은비, 유이솔', en: 'Park Si-yeon, Ji Ho-geun, Jeon Jun-ho, Cha Hyeon-seung, Jang Eun-bi, Yoo I-sol', vi: 'Park Si-yeon, Ji Ho-geun, Jeon Jun-ho, Cha Hyeon-seung, Jang Eun-bi, Yoo I-sol' },
+                url: 'https://www.youtube.com/shorts/ZGqZ7PrfGS8'
+            },
+            {
+                title: { ko: '퇴사를 요청합니다', en: 'I Request to Resign', vi: 'Yêu Cầu Từ Chức' },
+                genre: { ko: '로맨스', en: 'Romance', vi: 'Lãng mạn' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '저마다의 목적을 숨긴 채 한자리에 모인 싱글 남녀들! 오직 ‘본능’과 ‘이성’만이\n존재하는 이곳에서 매일 밤 은밀한 데이트가 펼쳐진다?!', en: 'Single men and women gather with hidden agendas! In a place where only \'instinct\' and \'reason\' exist, secret dates unfold every night?!', vi: 'Những người độc thân tụ tập với những mục đích riêng! Ở nơi chỉ có \'bản năng\' và \'lý trí\', những cuộc hẹn hò bí mật diễn ra mỗi đêm?!' },
+                cast: { ko: '이하은, 김평화, 설유안', en: 'Lee Ha-eun, Kim Pyeong-hwa, Seol Yu-an', vi: 'Lee Ha-eun, Kim Pyeong-hwa, Seol Yu-an' },
+                url: 'https://www.youtube.com/watch?v=Ult9AkX1bzw'
+            },
+            {
+                title: { ko: '사각지대', en: 'Blind Spot', vi: 'Điểm Mù' },
+                genre: { ko: '로맨스', en: 'Romance', vi: 'Lãng mạn' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '평범한 삶을 꿈꿨던 \'오금희\'의 인생이 꼬이기 시작했다!?\n완벽한 스펙의 소유자 \'유보라\’의 입사 후, 우연 무역에서 벌어지는 미스터리한 사건들!', en: 'The life of Oh Geum-hee, who dreamed of an ordinary life, starts to get complicated!? Mysterious events unfold at Wooyeon Trading after the perfectly qualified Yoo Bo-ra joins the company!', vi: 'Cuộc sống của Oh Geum-hee, người mơ về một cuộc sống bình thường, bắt đầu trở nên phức tạp!? Những sự kiện bí ẩn xảy ra tại Wooyeon Trading sau khi Yoo Bo-ra, người có lý lịch hoàn hảo, gia nhập công ty!' },
+                cast: { ko: '박시안, 신윤섭, 강지운, 배은우', en: 'Park Si-an, Shin Yun-seop, Kang Ji-un, Bae Eun-woo', vi: 'Park Si-an, Shin Yun-seop, Kang Ji-un, Bae Eun-woo' },
+                url: 'https://www.youtube.com/watch?v=4Q3XWQDZ-a8'
+            },
+            {
+                title: { ko: '남친 찾기 프로젝트', en: 'Boyfriend Search Project', vi: 'Dự Án Tìm Bạn Trai' },
+                genre: { ko: '로맨스 코미디', en: 'Rom-Com', vi: 'Hài lãng mạn' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '여교사와 재벌가의 지독하게 위태로운 사각 불륜 로맨스', en: 'A dangerously precarious quadrilateral affair romance between a female teacher and a chaebol family.', vi: 'Một mối tình tay tư nguy hiểm giữa một nữ giáo viên và một gia đình tài phiệt.' },
+                cast: { ko: '마츠시마 카논, 시마즈 켄', en: 'Matsushima Kanon, Shimazu Ken', vi: 'Matsushima Kanon, Shimazu Ken' },
+                url: 'https://www.youtube.com/watch?v=jn3qEepC_rg'
+            },
+            {
+                title: { ko: '내 남친은 "찐따"입니다', en: 'My Boyfriend is a "Loser"', vi: 'Bạn Trai Tôi Là "Kẻ Thua Cuộc"' },
+                genre: { ko: '로맨틱코미디', en: 'Rom-Com', vi: 'Hài lãng mạn' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '오늘의 남자친구는 누가 될까? 모태솔로 여고생의 설렘 가득 남친찾기프로젝트', en: 'Who will be today\'s boyfriend? A high school girl who has never dated embarks on a heart-fluttering boyfriend search project.', vi: 'Ai sẽ là bạn trai hôm nay? Một nữ sinh trung học chưa từng hẹn hò bắt đầu dự án tìm bạn trai đầy rung động.' },
+                cast: { ko: '빅병현, 김혜수', en: 'Big Byeong-hyeon, Kim Hye-soo', vi: 'Big Byeong-hyeon, Kim Hye-soo' },
+                url: 'https://www.youtube.com/shorts/_kmJn9A4Z9E'
+            },
+            {
+                title: { ko: '열아홉 금지하라', en: 'Nineteen, Forbidden', vi: 'Mười chín, Cấm' },
+                genre: { ko: '하이틴', en: 'Teen', vi: 'Tuổi teen' },
+                mainGenre: { ko: '일상/드라마', en: 'Slice of Life/Drama', vi: 'Đời thường/Chính kịch' },
+                synopsis: { ko: '전국 최고 찐따 남주는 어느 날 학교에서 제일 잘나가는 일진녀와\n부딪히게 되는데 찐따가 생각보다 일진녀의 스타일이다..?', en: 'The biggest loser in the country runs into the most popular bad girl at school one day, and it turns out the loser is surprisingly her type...?', vi: 'Nam chính ngốc nghếch nhất toàn quốc một ngày nọ đụng phải nữ sinh nổi loạn nhất trường, và hóa ra anh chàng ngốc lại là gu của cô ấy...?' },
+                cast: { ko: '홍지유, 정우진, 현지용, 김윤하', en: 'Hong Ji-yoo, Jeong Woo-jin, Hyeon Ji-yong, Kim Yoon-ha', vi: 'Hong Ji-yoo, Jeong Woo-jin, Hyeon Ji-yong, Kim Yoon-ha' },
+                url: 'https://www.youtube.com/watch?v=AZhF5rsadQU'
+            },
+            {
+                title: { ko: '게스트하우스의 목적', en: 'Purpose of the Guesthouse', vi: 'Mục Đích Của Nhà Khách' },
+                genre: { ko: '로맨틱 코미디', en: 'Rom-Com', vi: 'Hài lãng mạn' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '미국에서 남자친구와 바람난 절친을 응징한 19살 유제니,\n폭풍의 전학생 유제니가 한국으로 전학을 오자 학교의 분위기가 바뀐다.', en: '19-year-old Eugenie punishes her best friend who cheated with her boyfriend in America. When the whirlwind transfer student Eugenie comes to Korea, the school atmosphere changes.', vi: 'Eugenie, 19 tuổi, trừng phạt người bạn thân đã ngoại tình với bạn trai của cô ở Mỹ. Khi học sinh chuyển trường đầy sóng gió Eugenie đến Hàn Quốc, không khí của trường học thay đổi.' },
+                cast: { ko: '정호균, 이자민, 박산하, 송예빈 등', en: 'Jeong Ho-gyun, Lee Ja-min, Park San-ha, Song Ye-bin, etc.', vi: 'Jeong Ho-gyun, Lee Ja-min, Park San-ha, Song Ye-bin, etc.' },
+                url: 'https://www.youtube.com/watch?v=fTN0AkiMVUA'
+            },
+            {
+                title: { ko: '러브 머니 마피아', en: 'Love Money Mafia', vi: 'Tình Yêu, Tiền Bạc, Mafia' },
+                genre: { ko: '추리 스릴러', en: 'Mystery Thriller', vi: 'Bí ẩn Kinh dị' },
+                mainGenre: { ko: '액션/스릴러', en: 'Action/Thriller', vi: 'Hành động/Kinh dị' },
+                synopsis: { ko: '갓 휴학한 주인공 민우는 뜨거운 연애를 위해 게스트하우스 스태프로 아르바이트로 출격한다!\n하지만 그녀의 눈앞에 펼쳐진 것은 전쟁터보다 치열한 동물의 왕국?', en: 'Min-woo, who just took a leave of absence from school, starts working as a guesthouse staff for a passionate romance! But what unfolds before her eyes is a kingdom of animals more intense than a battlefield?', vi: 'Min-woo, vừa mới nghỉ học, bắt đầu làm nhân viên nhà khách để tìm kiếm một mối tình nồng cháy! Nhưng những gì diễn ra trước mắt cô là một vương quốc động vật còn khốc liệt hơn cả chiến trường?' },
+                cast: { ko: '이하민, 이예인, 정성인 등', en: 'Lee Ha-min, Lee Ye-in, Jeong Seong-in, etc.', vi: 'Lee Ha-min, Lee Ye-in, Jeong Seong-in, etc.' },
+                url: 'https://www.youtube.com/watch?v=7m0N3r3XheY'
+            },
+            {
+                title: { ko: '한번만 차주라', en: 'Dump Me Just Once', vi: 'Đá Em Một Lần Đi' },
+                genre: { ko: '로맨스', en: 'Romance', vi: 'Lãng mạn' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '결혼을 앞둔 7년 차 커플 혜선과 정호는 10억 원의 상금이 걸린 게임 프로그램 ‘러브 머니 마피아’에 초대된다.\n혜선은 과연 이 게임에서 살아남을 수 있을까?', en: 'Hye-sun and Jeong-ho, a couple of 7 years about to get married, are invited to a game show "Love Money Mafia" with a 1 billion won prize. Can Hye-sun survive this game?', vi: 'Hye-sun và Jeong-ho, một cặp đôi đã yêu nhau 7 năm và sắp cưới, được mời tham gia chương trình trò chơi "Love Money Mafia" với giải thưởng 1 tỷ won. Liệu Hye-sun có thể sống sót trong trò chơi này không?' },
+                cast: { ko: '신승호, 김수진, 최민우 등', en: 'Shin Seung-ho, Kim Su-jin, Choi Min-woo, etc.', vi: 'Shin Seung-ho, Kim Su-jin, Choi Min-woo, etc.' },
+                url: 'https://www.youtube.com/watch?v=U_MODa2db5M'
+            },
+            {
+                title: { ko: '오늘부터 재벌집을 파괴하겠습니다', en: 'I Will Destroy the Chaebol Family From Today', vi: 'Từ Hôm Nay, Tôi Sẽ Phá Hủy Gia Đình Tài Phiệt' },
+                genre: { ko: '로맨스', en: 'Romance', vi: 'Lãng mạn' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '가짜 고백으로 시작된 찐 연애 이야기! 연주는 술 게임 벌칙으로 고등 동창 재민에게 고백하게 되고,\n우연히 시작된 연애를 끝내기 위해 \'차이기 프로젝트\'를 시작한다.', en: 'A real love story that started with a fake confession! Yeon-joo confesses to her high school classmate Jae-min as a penalty for a drinking game, and starts a "get dumped project" to end the relationship that began by chance.', vi: 'Một câu chuyện tình yêu thật sự bắt đầu từ một lời tỏ tình giả! Yeon-joo tỏ tình với bạn cùng lớp cấp ba Jae-min như một hình phạt trong trò chơi uống rượu, và bắt đầu "dự án bị đá" để kết thúc mối quan hệ bắt đầu một cách tình cờ.' },
+                cast: { ko: '신기성, 김지은, 박상혁, 김예진, 박지원', en: 'Shin Gi-seong, Kim Ji-eun, Park Sang-hyeok, Kim Ye-jin, Park Ji-won', vi: 'Shin Gi-seong, Kim Ji-eun, Park Sang-hyeok, Kim Ye-jin, Park Ji-won' },
+                url: 'https://www.youtube.com/watch?v=vrq6wWA9Tyk'
+            },
+            {
+                title: { ko: '연애 뒷담화', en: 'Relationship Gossip', vi: 'Chuyện Hậu Trường Tình Yêu' },
+                genre: { ko: '로맨스', en: 'Romance', vi: 'Lãng mạn' },
+                mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
+                synopsis: { ko: '어느 날 서린은 극단적인 선택으로 세상을 떠난다.\n서린의 언니 서윤은 동생의 죽음이 남편 연석 때문이라고 확신하고 복수를 결심한다.\n서윤의 복수는 성공할 수 있을까, 아니면 새로운 감정이 그녀의 계획을 흔들어 놓을까?', en: 'One day, Seo-rin passes away by an extreme choice. Her sister Seo-yoon is convinced her husband Yeon-seok is the cause and decides to take revenge. Will her revenge succeed, or will new emotions shake her plan?', vi: 'Một ngày nọ, Seo-rin qua đời vì một lựa chọn cực đoan. Chị gái của cô, Seo-yoon, tin chắc rằng chồng mình, Yeon-seok, là nguyên nhân và quyết định trả thù. Liệu cuộc trả thù của cô có thành công, hay những cảm xúc mới sẽ làm lung lay kế hoạch của cô?' },
+                cast: { ko: '박재하, 박세련, 이제린, 이택현', en: 'Park Jae-ha, Park Se-ryeon, Lee Je-rin, Lee Taek-hyeon', vi: 'Park Jae-ha, Park Se-ryeon, Lee Je-rin, Lee Taek-hyeon' },
+                url: 'https://www.youtube.com/shorts/f2zeQ3o38oc'
+            }
+        ];
 
-      // 드라마 JS: genre buttons, gallery, modal etc. 그대로
-      // (공간 관계상 생략하였으나, 이전 모든 JS 그대로 포함하세요)
+        const translations = {
+            ko: {
+                nav_market: '시장 잠재력', nav_library: '콘텐츠 라이브러리', nav_partnership: '파트너십 모델', nav_contact: '문의하기',
+                hero_title1: '1,000편 이상의 K-숏폼 드라마로', hero_title2: '베트남 시장을 선도합니다', hero_subtitle: '압도적인 콘텐츠 라이브러리를 통해 베트남 숏폼 시장의 판도를 바꿀 최고의 파트너십을 제안합니다.',
+                opportunity_title: '기회의 땅, 베트남 시장의 잠재력', opportunity_desc: '모바일 중심의 젊은 세대가 이끄는 베트남의 숏폼 콘텐츠 시장은 폭발적으로 성장하고 있으며, K-콘텐츠에 대한 높은 선호도는 성공을 위한 최적의 환경을 제공합니다.', opportunity_chart_caption: '베트남 숏폼 드라마 시장 규모 전망 (단위: 백만 달러)',
+                library_title: '1,000+ 독보적인 K-드라마 라이브러리', library_desc: '로맨스부터 스릴러까지, 모든 장르를 아우르는 방대한 라이브러리를 통해 베트남 시청자들의 다양한 니즈를 완벽하게 충족시킬 수 있습니다.', library_note: '*일부 리스트 이며 더 자세한 내용은 추후 공개 하겠습니다',
+                filter_all: '전체보기', filter_romance_sliceoflife: '로맨스/일상', filter_action_thriller: '액션/스릴러', filter_sf_fantasy: 'SF/판타지', filter_comedy: '코미디', filter_bl_teen: 'BL/하이틴',
+                partnership_title: '성공을 위한 파트너십', partnership_desc: '귀사의 성공적인 비즈니스를 위해 다음과 같은 이점을 제공합니다.',
+                benefit_title: '파트너사 Benefit', benefit1: '1,000편 이상의 방대하고 안정적인 작품 공급', benefit2: 'K-콘텐츠 독점/선공개를 통한 플랫폼 경쟁력 극대화', benefit3: '신규 유저 유입 및 기존 유저 Lock-in 효과', benefit4: '충성도 높은 시청자 팬덤 확보 및 수익 모델 다각화',
+                contact_title: '지금 바로 논의를 시작하세요', contact_desc: '함께 성공을 만들어갈 최적의 파트너를 기다립니다. <br>귀사와의 긍정적인 파트너십을 기대합니다.', contact_button: '이메일 문의하기', contact_person_label: '담당자', contact_person_name: '고성덕 이사', contact_phone_label: '연락처',
+                modal_watch: '작품 보러가기', modal_details: '상세보기', modal_cast: '주요 출연진', show_more: '더보기', show_less: '접기', chart_label: '시장 규모 (백만 $)'
+            },
+            en: {
+                nav_market: 'Market Potential', nav_library: 'Content Library', nav_partnership: 'Partnership Model', nav_contact: 'Contact Us',
+                hero_title1: 'Lead the Vietnamese Market with', hero_title2: 'Over 1,000 K-Shortform Dramas', hero_subtitle: 'We propose the ultimate partnership to change the landscape of the Vietnamese short-form market with our overwhelming content library.',
+                opportunity_title: 'The Land of Opportunity: Vietnam\'s Market Potential', opportunity_desc: 'Vietnam\'s short-form content market, driven by a mobile-centric young generation, is growing explosively. The high preference for K-content provides the optimal environment for success.', opportunity_chart_caption: 'Vietnam Short-form Drama Market Size Forecast (Unit: Million USD)',
+                library_title: '1,000+ Unrivaled K-Drama Library', library_desc: 'From romance to thrillers, our vast library, covering all genres, can perfectly meet the diverse needs of Vietnamese viewers.', library_note: '*This is a partial list. More details will be provided upon further discussion.',
+                filter_all: 'View All', filter_romance_sliceoflife: 'Romance/Slice of Life', filter_action_thriller: 'Action/Thriller', filter_sf_fantasy: 'SF/Fantasy', filter_comedy: 'Comedy', filter_bl_teen: 'BL/Teen',
+                partnership_title: 'A Partnership for Success', partnership_desc: 'We offer the following benefits for your successful business.',
+                benefit_title: 'Partner Benefits', benefit1: 'A vast and stable supply of over 1,000 titles', benefit2: 'Maximize platform competitiveness with exclusive/early access to K-content', benefit3: 'Attract new users and increase existing user lock-in', benefit4: 'Secure a loyal viewership and diversify revenue models',
+                contact_title: 'Let\'s Start the Discussion Now', contact_desc: 'We are waiting for the best partner to create success together. <br>We look forward to a positive partnership with your company.', contact_button: 'Contact via Email', contact_person_label: 'Contact', contact_person_name: 'Seong-deok Go, Director', contact_phone_label: 'Phone',
+                modal_watch: 'Watch Now', modal_details: 'View Details', modal_cast: 'Main Cast', show_more: 'Show More', show_less: 'Show Less', chart_label: 'Market Size (Million $)'
+            },
+            vi: {
+                nav_market: 'Tiềm năng thị trường', nav_library: 'Thư viện nội dung', nav_partnership: 'Mô hình hợp tác', nav_contact: 'Liên hệ',
+                hero_title1: 'Dẫn đầu thị trường Việt Nam với', hero_title2: 'hơn 1,000 phim ngắn Hàn Quốc', hero_subtitle: 'Chúng tôi đề xuất một quan hệ đối tác chiến lược để thay đổi cục diện thị trường phim ngắn Việt Nam với thư viện nội dung khổng lồ của chúng tôi.',
+                opportunity_title: 'Vùng đất của cơ hội: Tiềm năng thị trường Việt Nam', opportunity_desc: 'Thị trường nội dung dạng ngắn của Việt Nam, được thúc đẩy bởi thế hệ trẻ tập trung vào di động, đang phát triển bùng nổ. Sự yêu thích cao đối với nội dung Hàn Quốc tạo ra môi trường tối ưu cho sự thành công.', opportunity_chart_caption: 'Dự báo quy mô thị trường phim ngắn Việt Nam (Đơn vị: triệu USD)',
+                library_title: 'Hơn 1,000+ Thư viện phim Hàn Quốc độc quyền', library_desc: 'Từ lãng mạn đến kinh dị, thư viện rộng lớn của chúng tôi, bao gồm tất cả các thể loại, có thể đáp ứng hoàn hảo nhu cầu đa dạng của khán giả Việt Nam.', library_note: '*Đây là danh sách một phần. Thông tin chi tiết sẽ được cung cấp sau.',
+                filter_all: 'Xem tất cả', filter_romance_sliceoflife: 'Lãng mạn/Đời thường', filter_action_thriller: 'Hành động/Kinh dị', filter_sf_fantasy: 'Viễn tưởng/Kỳ ảo', filter_comedy: 'Hài', filter_bl_teen: 'BL/Thiếu niên',
+                partnership_title: 'Hợp tác vì thành công', partnership_desc: 'Chúng tôi cung cấp những lợi ích sau cho sự thành công trong kinh doanh của bạn.',
+                benefit_title: 'Lợi ích của đối tác', benefit1: 'Cung cấp ổn định hơn 1,000 tác phẩm đồ sộ', benefit2: 'Tối đa hóa khả năng cạnh tranh của nền tảng thông qua việc độc quyền/phát hành sớm nội dung Hàn Quốc', benefit3: 'Thu hút người dùng mới và giữ chân người dùng hiện tại', benefit4: 'Xây dựng lượng người xem trung thành và đa dạng hóa mô hình doanh thu',
+                contact_title: 'Hãy bắt đầu thảo luận ngay bây giờ', contact_desc: 'Chúng tôi đang tìm kiếm đối tác tốt nhất để cùng nhau tạo nên thành công. <br>Rất mong được hợp tác tích cực với quý công ty.', contact_button: 'Liên hệ qua Email', contact_person_label: 'Người phụ trách', contact_person_name: 'Giám đốc Go Seong-deok', contact_phone_label: 'Điện thoại',
+                modal_watch: 'Xem ngay', modal_details: 'Xem chi tiết', modal_cast: 'Diễn viên chính', show_more: 'Xem thêm', show_less: 'Thu gọn', chart_label: 'Quy mô thị trường (Triệu $)'
+            }
+        };
+
+        let currentLang = 'ko';
+        let marketChart;
+
+        function getYouTubeVideoId(url) {
+            if (!url) return null;
+            let videoId = null;
+            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:shorts\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(regex);
+            if (match) {
+                videoId = match[1];
+            }
+            return videoId;
+        }
+
+        dramas.forEach(drama => {
+            const videoId = getYouTubeVideoId(drama.url);
+            if (videoId) {
+                drama.poster = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+                drama.url = `https://www.youtube.com/watch?v=${videoId}`;
+            } else {
+                const titleText = encodeURIComponent(drama.title.ko.replace(/\s/g, '\\n'));
+                drama.poster = `https://placehold.co/400x600/6b7280/ffffff?text=${titleText}`;
+            }
+        });
+
+        function createChart() {
+            if(marketChart) {
+                marketChart.destroy();
+            }
+            const ctx = document.getElementById('marketGrowthChart').getContext('2d');
+            marketChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2022', '2023', '2024', '2025 (Est.)', '2026 (Est.)'],
+                    datasets: [{
+                        label: translations[currentLang].chart_label,
+                        data: [25, 55, 120, 250, 410],
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                        pointRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, ticks: { callback: (value) => '$' + value + 'M' } } },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    let label = context.dataset.label || '';
+                                    if (label) label += ': ';
+                                    if (context.parsed.y !== null) label += '$' + context.parsed.y + 'M';
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        const gallery = document.getElementById('drama-gallery');
+        const genreFiltersContainer = document.getElementById('genre-filters');
+        const galleryControls = document.getElementById('gallery-controls');
+        const modal = document.getElementById('drama-modal');
+        const modalContent = document.getElementById('modal-content');
+        const langSwitcher = document.getElementById('lang-switcher');
+        const langSwitcherButton = document.getElementById('lang-switcher-button');
+        const langSwitcherMenu = document.getElementById('lang-switcher-menu');
+        const currentLangText = document.getElementById('current-lang-text');
+
+        let currentFilter = 'all';
+        let isExpanded = false;
+        const initialDisplayCount = 8;
+        
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+
+            document.querySelectorAll('[data-translate-key]').forEach(el => {
+                const key = el.dataset.translateKey;
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            
+            const langTextMap = { ko: '한국어', en: 'English', vi: 'Tiếng Việt' };
+            currentLangText.textContent = langTextMap[lang];
+
+            createGenreButtons();
+            displayDramas();
+            createChart();
+        }
+
+        function createGenreButtons() {
+            const existingButtons = genreFiltersContainer.querySelectorAll('.genre-filter-btn:not([data-genre="all"])');
+            existingButtons.forEach(btn => btn.remove());
+            
+            const mainGenres = [
+                { key: 'filter_romance_sliceoflife', value: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' } },
+                { key: 'filter_action_thriller', value: { ko: '액션/스릴러', en: 'Action/Thriller', vi: 'Hành động/Kinh dị' } },
+                { key: 'filter_sf_fantasy', value: { ko: 'SF/판타지', en: 'SF/Fantasy', vi: 'Viễn tưởng/Kỳ ảo' } },
+                { key: 'filter_comedy', value: { ko: '코미디', en: 'Comedy', vi: 'Hài' } },
+                { key: 'filter_bl_teen', value: { ko: 'BL/하이틴', en: 'BL/Teen', vi: 'BL/Thiếu niên' } }
+            ];
+
+            mainGenres.forEach(genreInfo => {
+                const btn = document.createElement('button');
+                btn.className = 'genre-filter-btn';
+                btn.dataset.genre = genreInfo.value.en; // Use English as a consistent key
+                btn.textContent = genreInfo.value[currentLang];
+                btn.dataset.translateKey = genreInfo.key;
+                genreFiltersContainer.appendChild(btn);
+            });
+
+            document.querySelectorAll('.genre-filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.genre-filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.genre;
+                    isExpanded = false;
+                    displayDramas();
+                });
+            });
+        }
+
+        function getFilteredDramas() {
+            if (currentFilter === 'all') return dramas;
+            return dramas.filter(d => d.mainGenre.en === currentFilter);
+        }
+
+        function displayDramas() {
+            const filtered = getFilteredDramas();
+            gallery.innerHTML = '';
+            const dramasToDisplay = isExpanded ? filtered : filtered.slice(0, initialDisplayCount);
+
+            dramasToDisplay.forEach(drama => {
+                const dramaEl = document.createElement('div');
+                dramaEl.className = 'group cursor-pointer';
+                dramaEl.innerHTML = `
+                    <div class="aspect-[2/3] w-full bg-gray-200 rounded-lg overflow-hidden relative">
+                        <img src="${drama.poster}" alt="${drama.title[currentLang]}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/400x600/6b7280/ffffff?text=Image\\nNot\\nFound';">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
+                           <p class="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">${translations[currentLang].modal_details}</p>
+                        </div>
+                    </div>
+                    <h5 class="mt-2 text-md font-bold text-gray-900 truncate">${drama.title[currentLang]}</h5>
+                    <p class="text-sm text-gray-500">${drama.genre[currentLang]}</p>
+                `;
+                dramaEl.addEventListener('click', () => openModal(drama));
+                gallery.appendChild(dramaEl);
+            });
+
+            updateGalleryControls(filtered.length);
+        }
+
+        function updateGalleryControls(totalCount) {
+            galleryControls.innerHTML = '';
+            if (totalCount > initialDisplayCount) {
+                const button = document.createElement('button');
+                button.textContent = isExpanded ? translations[currentLang].show_less : translations[currentLang].show_more;
+                button.className = 'bg-sky-700 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-sky-800 transition';
+                button.addEventListener('click', () => {
+                    isExpanded = !isExpanded;
+                    displayDramas();
+                });
+                galleryControls.appendChild(button);
+            }
+        }
+        
+        function openModal(drama) {
+            const watchButtonHtml = drama.url ? `
+                <div class="mt-6">
+                    <a href="${drama.url}" target="_blank" rel="noopener noreferrer" class="inline-block w-full text-center bg-sky-700 text-white font-bold py-3 px-6 rounded-lg text-base hover:bg-sky-800 transition">
+                        ${translations[currentLang].modal_watch}
+                    </a>
+                </div>` : '';
+
+            modalContent.innerHTML = `
+                <button id="close-modal" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 z-10">&times;</button>
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/3 flex-shrink-0">
+                        <img src="${drama.poster}" alt="${drama.title[currentLang]}" class="w-full h-auto object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none" onerror="this.onerror=null;this.src='https://placehold.co/400x600/6b7280/ffffff?text=Image\\nNot\\nFound';">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                         <h3 class="text-2xl font-bold text-gray-900">${drama.title[currentLang]}</h3>
+                         <p class="mt-1 text-sm font-medium text-sky-600">${drama.genre[currentLang]}</p>
+                         <p class="mt-4 text-gray-600 whitespace-pre-wrap">${drama.synopsis[currentLang]}</p>
+                         <p class="mt-4 text-sm"><strong class="font-semibold text-gray-800">${translations[currentLang].modal_cast}:</strong> ${drama.cast[currentLang]}</p>
+                         <div class="flex-grow"></div>
+                         ${watchButtonHtml}
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+            document.getElementById('close-modal').addEventListener('click', closeModal);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.add('scale-95');
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        langSwitcherButton.addEventListener('click', () => {
+            langSwitcherMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                setLanguage(e.target.dataset.lang);
+                langSwitcherMenu.classList.add('hidden');
+            });
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (!langSwitcher.contains(e.target)) {
+                langSwitcherMenu.classList.add('hidden');
+            }
+        });
+
+        // Initial Load
+        setLanguage('ko');
+        
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .genre-filter-btn {
+                padding: 0.5rem 1rem;
+                border-radius: 9999px;
+                font-weight: 500;
+                font-size: 0.875rem;
+                color: #4b5563;
+                background-color: #e5e7eb;
+                transition: all 0.2s;
+            }
+            .genre-filter-btn:hover {
+                background-color: #d1d5db;
+            }
+            .genre-filter-btn.active {
+                color: #ffffff;
+                background-color: #0369a1; /* sky-800 */
+                font-weight: 700;
+            }
+            #close-modal {
+                font-size: 2rem;
+                line-height: 1;
+                border: none;
+                background: none;
+                cursor: pointer;
+            }
+        `;
+        document.head.appendChild(style);
     });
-  </script>
+    </script>
 </body>
 </html>
