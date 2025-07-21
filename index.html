@@ -82,7 +82,7 @@
         <!-- Section 1: Hero -->
         <section class="relative h-[60vh] md:h-[80vh] flex items-center justify-center text-center bg-gray-200 overflow-hidden">
             <div class="absolute inset-0 z-0">
-                   <img src="https://placehold.co/1920x1080/1e293b/f8f7f4?text=+" alt="Background Image" class="w-full h-full object-cover opacity-30">
+                   <img src="https://placehold.co/1e293b/f8f7f4?text=+" alt="" class="w-full h-full object-cover opacity-30">
             </div>
             <div class="relative z-10 p-4">
                 <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
@@ -335,7 +335,7 @@
                 genre: { ko: '로맨스', en: 'Romance', vi: 'Lãng mạn' },
                 mainGenre: { ko: '로맨스/일상', en: 'Romance/Slice of Life', vi: 'Lãng mạn/Đời thường' },
                 synopsis: { ko: '어느 날 서린은 극단적인 선택으로 세상을 떠난다.\n서린의 언니 서윤은 동생의 죽음이 남편 연석 때문이라고 확신하고 복수를 결심한다.\n서윤의 복수는 성공할 수 있을까, 아니면 새로운 감정이 그녀의 계획을 흔들어 놓을까?', en: 'One day, Seo-rin passes away by an extreme choice. Her sister Seo-yoon is convinced her husband Yeon-seok is the cause and decides to take revenge. Will her revenge succeed, or will new emotions shake her plan?', vi: 'Một ngày nọ, Seo-rin qua đời vì một lựa chọn cực đoan. Chị gái của cô, Seo-yoon, tin chắc rằng chồng mình, Yeon-seok, là nguyên nhân và quyết định trả thù. Liệu cuộc trả thù của cô có thành công, hay những cảm xúc mới sẽ làm lung lay kế hoạch của cô?' },
-                cast: { ko: '박재하, 박세련, 이제린, 이택현', en: 'Park Jae-ha, Park Se-ryeon, Lee Je-rin, Lee Taek-hyeon', vi: 'Park Jae-ha, Park Se-ryeon, Lee Je-rin, Lee Taek-hyeon' },
+                cast: { ko: '박재하, 박세련, 이제린, 이택현', en: 'Park Jae-ha, Park Se-ryeon, Lee Je-rin, Lee Taek-hyeon', vi: 'Park Jae-ha, 박세련, 이제린, 이택현' },
                 url: 'https://www.youtube.com/shorts/f2zeQ3o38oc'
             }
         ];
@@ -575,7 +575,7 @@
             `;
             
             modal.classList.remove('opacity-0', 'pointer-events-none');
-            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-95');
             document.getElementById('close-modal').addEventListener('click', closeModal);
         }
 
