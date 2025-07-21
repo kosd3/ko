@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutral Harmony -->
-    <!-- Application Structure Plan: The application is designed as a top-to-bottom narrative funnel. It starts with a compelling headline (Hero), presents the market opportunity with interactive stats and a chart (The Opportunity), allows deep exploration of the core offering via a filterable and collapsible content gallery (Our Library), outlines the mutual benefits (Partnership), and ends with a clear call to action (Contact). This structure is chosen over a direct PPT-to-web conversion to guide the potential partner through a journey of discovery and persuasion, making the value proposition tangible and engaging. -->
+    <!-- Application Structure Plan: The application is designed as a top-to-bottom narrative funnel. It starts with a compelling headline (Hero), presents the market opportunity with interactive stats and a chart (The Opportunity), allows deep exploration of the core offering via a filterable and collapsible content gallery (Our Library), outlines the mutual benefits (Partnership). This structure is chosen over a direct PPT-to-web conversion to guide the potential partner through a journey of discovery and persuasion, making the value proposition tangible and engaging. -->
     <!-- Visualization & Content Choices: 
     - Market Growth (Report Info) -> Goal: Inform/Impress -> Viz: Chart.js Line Chart -> Interaction: Animated load, tooltips -> Justification: Visually demonstrates the lucrative market trend, more impactful than static numbers. Library: Chart.js.
     - Core Competencies (Report Info) -> Goal: Build Confidence -> Viz: Icon-based info cards -> Interaction: Subtle hover effects -> Justification: Enhances readability and visual appeal over simple text. Library: Tailwind CSS.
@@ -58,7 +58,6 @@
                         <a href="#opportunity" class="text-gray-600 hover:text-sky-700 px-3 py-2 rounded-md text-sm font-medium" data-translate-key="nav_market">시장 잠재력</a>
                         <a href="#library" class="text-gray-600 hover:text-sky-700 px-3 py-2 rounded-md text-sm font-medium" data-translate-key="nav_library">콘텐츠 라이브러리</a>
                         <a href="#partnership" class="text-gray-600 hover:text-sky-700 px-3 py-2 rounded-md text-sm font-medium" data-translate-key="nav_partnership">파트너십 모델</a>
-                        <a href="#contact" class="bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-sky-800" data-translate-key="nav_contact">문의하기</a>
                     </div>
                     <!-- Language Dropdown -->
                     <div id="lang-switcher" class="relative ml-6 pl-6 border-l border-gray-300">
@@ -83,7 +82,7 @@
         <!-- Section 1: Hero -->
         <section class="relative h-[60vh] md:h-[80vh] flex items-center justify-center text-center bg-gray-200 overflow-hidden">
             <div class="absolute inset-0 z-0">
-                 <img src="https://placehold.co/1920x1080/1e293b/f8f7f4?text=+" alt="Background Image" class="w-full h-full object-cover opacity-30">
+                   <img src="https://placehold.co/1920x1080/1e293b/f8f7f4?text=+" alt="Background Image" class="w-full h-full object-cover opacity-30">
             </div>
             <div class="relative z-10 p-4">
                 <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
@@ -155,22 +154,6 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Section 5: Contact -->
-        <section id="contact" class="py-20 bg-sky-800 text-white">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                 <h3 class="text-3xl font-bold tracking-tight sm:text-4xl" data-translate-key="contact_title">지금 바로 논의를 시작하세요</h3>
-                 <p class="mt-4 text-lg text-sky-100" data-translate-key="contact_desc">함께 성공을 만들어갈 최적의 파트너를 기다립니다. <br>귀사와의 긍정적인 파트너십을 기대합니다.</p>
-                 <div class="mt-8">
-                     <a href="mailto:kosd3@scompanys.com" class="inline-block bg-white text-sky-800 font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-100 transition" data-translate-key="contact_button">
-                         이메일 문의하기
-                     </a>
-                 </div>
-                 <div class="mt-6 text-sky-200 text-sm">
-                     <p><span data-translate-key="contact_person_label">담당자</span>: <span data-translate-key="contact_person_name">고성덕 이사</span> | <span data-translate-key="contact_phone_label">연락처</span>: +82 10 6249 8222</p>
-                 </div>
             </div>
         </section>
     </main>
@@ -359,36 +342,33 @@
 
         const translations = {
             ko: {
-                nav_market: '시장 잠재력', nav_library: '콘텐츠 라이브러리', nav_partnership: '파트너십 모델', nav_contact: '문의하기',
+                nav_market: '시장 잠재력', nav_library: '콘텐츠 라이브러리', nav_partnership: '파트너십 모델',
                 hero_title1: '1,000편 이상의 K-숏폼 드라마로', hero_title2: '베트남 시장을 선도합니다', hero_subtitle: '압도적인 콘텐츠 라이브러리를 통해 베트남 숏폼 시장의 판도를 바꿀 최고의 파트너십을 제안합니다.',
                 opportunity_title: '기회의 땅, 베트남 시장의 잠재력', opportunity_desc: '모바일 중심의 젊은 세대가 이끄는 베트남의 숏폼 콘텐츠 시장은 폭발적으로 성장하고 있으며, K-콘텐츠에 대한 높은 선호도는 성공을 위한 최적의 환경을 제공합니다.', opportunity_chart_caption: '베트남 숏폼 드라마 시장 규모 전망 (단위: 백만 달러)',
                 library_title: '1,000+ 독보적인 K-드라마 라이브러리', library_desc: '로맨스부터 스릴러까지, 모든 장르를 아우르는 방대한 라이브러리를 통해 베트남 시청자들의 다양한 니즈를 완벽하게 충족시킬 수 있습니다.', library_note: '*일부 리스트 이며 더 자세한 내용은 추후 공개 하겠습니다',
                 filter_all: '전체보기', filter_romance_sliceoflife: '로맨스/일상', filter_action_thriller: '액션/스릴러', filter_sf_fantasy: 'SF/판타지', filter_comedy: '코미디', filter_bl_teen: 'BL/하이틴',
                 partnership_title: '성공을 위한 파트너십', partnership_desc: '귀사의 성공적인 비즈니스를 위해 다음과 같은 이점을 제공합니다.',
                 benefit_title: '파트너사 Benefit', benefit1: '1,000편 이상의 방대하고 안정적인 작품 공급', benefit2: 'K-콘텐츠 독점/선공개를 통한 플랫폼 경쟁력 극대화', benefit3: '신규 유저 유입 및 기존 유저 Lock-in 효과', benefit4: '충성도 높은 시청자 팬덤 확보 및 수익 모델 다각화',
-                contact_title: '지금 바로 논의를 시작하세요', contact_desc: '함께 성공을 만들어갈 최적의 파트너를 기다립니다. <br>귀사와의 긍정적인 파트너십을 기대합니다.', contact_button: '이메일 문의하기', contact_person_label: '담당자', contact_person_name: '고성덕 이사', contact_phone_label: '연락처',
                 modal_watch: '작품 보러가기', modal_details: '상세보기', modal_cast: '주요 출연진', show_more: '더보기', show_less: '접기', chart_label: '시장 규모 (백만 $)'
             },
             en: {
-                nav_market: 'Market Potential', nav_library: 'Content Library', nav_partnership: 'Partnership Model', nav_contact: 'Contact Us',
+                nav_market: 'Market Potential', nav_library: 'Content Library', nav_partnership: 'Partnership Model',
                 hero_title1: 'Lead the Vietnamese Market with', hero_title2: 'Over 1,000 K-Shortform Dramas', hero_subtitle: 'We propose the ultimate partnership to change the landscape of the Vietnamese short-form market with our overwhelming content library.',
                 opportunity_title: 'The Land of Opportunity: Vietnam\'s Market Potential', opportunity_desc: 'Vietnam\'s short-form content market, driven by a mobile-centric young generation, is growing explosively. The high preference for K-content provides the optimal environment for success.', opportunity_chart_caption: 'Vietnam Short-form Drama Market Size Forecast (Unit: Million USD)',
                 library_title: '1,000+ Unrivaled K-Drama Library', library_desc: 'From romance to thrillers, our vast library, covering all genres, can perfectly meet the diverse needs of Vietnamese viewers.', library_note: '*This is a partial list. More details will be provided upon further discussion.',
                 filter_all: 'View All', filter_romance_sliceoflife: 'Romance/Slice of Life', filter_action_thriller: 'Action/Thriller', filter_sf_fantasy: 'SF/Fantasy', filter_comedy: 'Comedy', filter_bl_teen: 'BL/Teen',
                 partnership_title: 'A Partnership for Success', partnership_desc: 'We offer the following benefits for your successful business.',
                 benefit_title: 'Partner Benefits', benefit1: 'A vast and stable supply of over 1,000 titles', benefit2: 'Maximize platform competitiveness with exclusive/early access to K-content', benefit3: 'Attract new users and increase existing user lock-in', benefit4: 'Secure a loyal viewership and diversify revenue models',
-                contact_title: 'Let\'s Start the Discussion Now', contact_desc: 'We are waiting for the best partner to create success together. <br>We look forward to a positive partnership with your company.', contact_button: 'Contact via Email', contact_person_label: 'Contact', contact_person_name: 'Seong-deok Go, Director', contact_phone_label: 'Phone',
                 modal_watch: 'Watch Now', modal_details: 'View Details', modal_cast: 'Main Cast', show_more: 'Show More', show_less: 'Show Less', chart_label: 'Market Size (Million $)'
             },
             vi: {
-                nav_market: 'Tiềm năng thị trường', nav_library: 'Thư viện nội dung', nav_partnership: 'Mô hình hợp tác', nav_contact: 'Liên hệ',
+                nav_market: 'Tiềm năng thị trường', nav_library: 'Thư viện nội dung', nav_partnership: 'Mô hình hợp tác',
                 hero_title1: 'Dẫn đầu thị trường Việt Nam với', hero_title2: 'hơn 1,000 phim ngắn Hàn Quốc', hero_subtitle: 'Chúng tôi đề xuất một quan hệ đối tác chiến lược để thay đổi cục diện thị trường phim ngắn Việt Nam với thư viện nội dung khổng lồ của chúng tôi.',
                 opportunity_title: 'Vùng đất của cơ hội: Tiềm năng thị trường Việt Nam', opportunity_desc: 'Thị trường nội dung dạng ngắn của Việt Nam, được thúc đẩy bởi thế hệ trẻ tập trung vào di động, đang phát triển bùng nổ. Sự yêu thích cao đối với nội dung Hàn Quốc tạo ra môi trường tối ưu cho sự thành công.', opportunity_chart_caption: 'Dự báo quy mô thị trường phim ngắn Việt Nam (Đơn vị: triệu USD)',
                 library_title: 'Hơn 1,000+ Thư viện phim Hàn Quốc độc quyền', library_desc: 'Từ lãng mạn đến kinh dị, thư viện rộng lớn của chúng tôi, bao gồm tất cả các thể loại, có thể đáp ứng hoàn hảo nhu cầu đa dạng của khán giả Việt Nam.', library_note: '*Đây là danh sách một phần. Thông tin chi tiết sẽ được cung cấp sau.',
                 filter_all: 'Xem tất cả', filter_romance_sliceoflife: 'Lãng mạn/Đời thường', filter_action_thriller: 'Hành động/Kinh dị', filter_sf_fantasy: 'Viễn tưởng/Kỳ ảo', filter_comedy: 'Hài', filter_bl_teen: 'BL/Thiếu niên',
                 partnership_title: 'Hợp tác vì thành công', partnership_desc: 'Chúng tôi cung cấp những lợi ích sau cho sự thành công trong kinh doanh của bạn.',
                 benefit_title: 'Lợi ích của đối tác', benefit1: 'Cung cấp ổn định hơn 1,000 tác phẩm đồ sộ', benefit2: 'Tối đa hóa khả năng cạnh tranh của nền tảng thông qua việc độc quyền/phát hành sớm nội dung Hàn Quốc', benefit3: 'Thu hút người dùng mới và giữ chân người dùng hiện tại', benefit4: 'Xây dựng lượng người xem trung thành và đa dạng hóa mô hình doanh thu',
-                contact_title: 'Hãy bắt đầu thảo luận ngay bây giờ', contact_desc: 'Chúng tôi đang tìm kiếm đối tác tốt nhất để cùng nhau tạo nên thành công. <br>Rất mong được hợp tác tích cực với quý công ty.', contact_button: 'Liên hệ qua Email', contact_person_label: 'Người phụ trách', contact_person_name: 'Giám đốc Go Seong-deok', contact_phone_label: 'Điện thoại',
                 modal_watch: 'Xem ngay', modal_details: 'Xem chi tiết', modal_cast: 'Diễn viên chính', show_more: 'Xem thêm', show_less: 'Thu gọn', chart_label: 'Quy mô thị trường (Triệu $)'
             }
         };
@@ -584,12 +564,12 @@
                         <img src="${drama.poster}" alt="${drama.title[currentLang]}" class="w-full h-auto object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none" onerror="this.onerror=null;this.src='https://placehold.co/400x600/6b7280/ffffff?text=Image\\nNot\\nFound';">
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
-                         <h3 class="text-2xl font-bold text-gray-900">${drama.title[currentLang]}</h3>
-                         <p class="mt-1 text-sm font-medium text-sky-600">${drama.genre[currentLang]}</p>
-                         <p class="mt-4 text-gray-600 whitespace-pre-wrap">${drama.synopsis[currentLang]}</p>
-                         <p class="mt-4 text-sm"><strong class="font-semibold text-gray-800">${translations[currentLang].modal_cast}:</strong> ${drama.cast[currentLang]}</p>
-                         <div class="flex-grow"></div>
-                         ${watchButtonHtml}
+                           <h3 class="text-2xl font-bold text-gray-900">${drama.title[currentLang]}</h3>
+                           <p class="mt-1 text-sm font-medium text-sky-600">${drama.genre[currentLang]}</p>
+                           <p class="mt-4 text-gray-600 whitespace-pre-wrap">${drama.synopsis[currentLang]}</p>
+                           <p class="mt-4 text-sm"><strong class="font-semibold text-gray-800">${translations[currentLang].modal_cast}:</strong> ${drama.cast[currentLang]}</p>
+                           <div class="flex-grow"></div>
+                           ${watchButtonHtml}
                     </div>
                 </div>
             `;
